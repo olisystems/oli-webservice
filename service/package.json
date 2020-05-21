@@ -1,0 +1,39 @@
+{
+  "name": "oli-webservice.git",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
+    "start:prod": "pm2 start ./dist/app.js",
+    "stop:prod": "pm2 stop ./dist/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olisystems/oli-webservice.git"
+  },
+  "author": "Giuliano Baumann",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.9.3"
+  },
+  "dependencies": {
+    "@types/body-parser": "^1.19.0",
+    "@types/compression": "^1.7.0",
+    "@types/express": "^4.17.6",
+    "@types/morgan": "^1.9.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.2.1",
+    "reflect-metadata": "^0.1.13",
+    "save": "^2.4.0",
+    "ts-node": "^8.10.1",
+    "typeorm": "^0.2.25",
+    "winston": "^3.2.1",
+    "xml-js": "^1.6.11"
+  }
+}
