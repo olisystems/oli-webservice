@@ -1,1 +1,3 @@
-export { MessageHeader } from './message-header'
+export { MessageHeader } from './message-header';
+export { Measurement } from './measurement';
+export { MeterData } from './meter-data';
