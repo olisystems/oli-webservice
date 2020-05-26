@@ -17,5 +17,6 @@ export const config = {
         },
         retries: 5,
         retryTimeout: 5000   // 5000 milli seconds
-    }
+    },
+    ipWhitelist: [`${process.env.CLIENT_IP_NET}`, '::1', '::/0']
 }

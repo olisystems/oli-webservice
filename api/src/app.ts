@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 import 'reflect-metadata';
 import express = require('express');
 import { Request, Response } from "express";
+const ipfilter = require('express-ipfilter').IpFilter
 import morgan = require('morgan');
 import bodyParser = require('body-parser');
 import compression = require('compression');
@@ -12,13 +13,12 @@ import { config } from './config'
 import { logger } from './logger';
 import { connectDb } from './connect-db';
 import { postMeterData } from './controller';
-
+import { initKeycloak } from './setup-keycloak';
+const keycloak: any = initKeycloak();
 const port = process.env.SERVER_PORT
-const xml = require('fs').readFileSync(__dirname + '/../resources/wsdl/MeterDataCollectionOut.svc.wsdl', 'utf8');
 
 export const app: express.Application = express();
 export var dbConnection: any;
-
 
 
 // Start app
@@ -27,7 +27,7 @@ const startApp = async () => {
     // Log mode
     if (process.env.NODE_ENV === 'production') {
         logger.info('in production mode');
-    } else {    
+    } else {
         logger.info('in develop mode');
     }
 
@@ -36,38 +36,45 @@ const startApp = async () => {
     if (dbConnection) {
 
         logger.info(`successfully connected to ${config.db.connection.type}`);
-
-
-        // Environment
-        app.get('env');
-
+        
 
         // Develop log
         if (process.env.NODE_ENV !== 'production') {
             app.use(morgan('dev'));
         }
 
+        // IP filter
+        app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
+
         // Body parser
         app.use(bodyParser.raw({ type: function () { return true; }, limit: '5mb' }));
 
-
+        // Keycloak middleware
+        app.use(keycloak.middleware());
+        
         // Routes
-        app.post('/soap', async function (req: Request, res: Response) {
-            
+        app.post('/soap', keycloak.protect(), async function (req: Request, res: Response) {
+
             let postMeterDataRes: any = await postMeterData(dbConnection, req.body);
             res.status(postMeterDataRes.status).send(req.body);
         });
-        
 
         // Errors
-        app.use((req, res) => {
+        app.use((error: any, req: any, res: any, _next: any) => {
 
-            const error = new Error('Not found');
-            res.status(404).json({
-                error: {
-                    message: error.message
+            let errorRes: object = {};
+            
+            if (error.name === 'IpDeniedError') {
+                
+                logger.error(error);
+                res.status(error.status);
+                errorRes = {
+                    message: 'Access denied',
+                    error: error
                 }
-            });
+            }
+
+            res.json(errorRes)
         });
 
         // http server
@@ -76,7 +83,7 @@ const startApp = async () => {
         });
 
     } else {
-        logger.info(`failed to connect to ${config.db.connection.type}`)
+        logger.error(`failed to connect to ${config.db.connection.type}`)
     }
 }
 startApp();

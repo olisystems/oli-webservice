@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { MessageHeader, Measurement, MeterData } from '../entity';
 import { IMessageHeader, IMeasurement, IMeterData } from '../model';
+import { logger } from '../logger';
 const convert = require('xml-js');
 
 
@@ -34,6 +35,8 @@ export async function postMeterData(dbConnection: any, data: any) {
         try {
             postMessageHeader = await messageHeaderRepository.save(messageHeader);
         } catch (error) {
+            
+            logger.error(error);
             resolve({
                 status: 500,
                 error: error
@@ -43,6 +46,8 @@ export async function postMeterData(dbConnection: any, data: any) {
         try {
             postMeasurement = await measurementRepository.save(measurement);
         } catch (error) {
+            
+            logger.error(error);
             resolve({
                 status: 500,
                 error: error
@@ -58,13 +63,15 @@ export async function postMeterData(dbConnection: any, data: any) {
             meterData.rawData = rawData;
             postMeterData = await meterDataRepository.save(meterData);
         } catch (error) {
-            console.log(error);
+            
+            logger.error(error);
             resolve({
                 status: 500,
                 error: error
             })
         }
 
+        logger.verbose("forward meterdata successfully performed");
         resolve({
             status: 201,
             data: postMessageHeader

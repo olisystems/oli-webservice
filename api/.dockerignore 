@@ -1,0 +1,7 @@
+.env
+node_modules/
+logs/error.log
+logs/info.log
+logs/verbose.log
+.env
+.env.example
