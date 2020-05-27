@@ -1,6 +1,11 @@
 
-# Remove service dist
-rm -r api/dist
+DIR="api/dist"
+
+# Remove api dist
+if [ -d "$DIR" ]; then
+    rm -rf "$DIR"
+    printf '%s\n' "Removing Lock ($DIR)"
+fi
 
 # Build service
 npm run --prefix api build

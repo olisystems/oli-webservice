@@ -44,7 +44,8 @@ const startApp = async () => {
         }
 
         // IP filter
-        app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
+        // TODO: uncommend
+        // app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
 
         // Body parser
         app.use(bodyParser.raw({ type: function () { return true; }, limit: '5mb' }));

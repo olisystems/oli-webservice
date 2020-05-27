@@ -9,14 +9,32 @@ export const config = {
             password: process.env.PG_PASSWORD,
             database: process.env.PG_DATABASE,
             entities: [
-              __dirname + '/entity/*.ts',
-              __dirname + '/entity/*.js'
+                __dirname + '/entity/*.ts',
+                __dirname + '/entity/*.js'
             ],
             synchronize: false,
             logging: false
         },
         retries: 5,
         retryTimeout: 5000   // 5000 milli seconds
+    },
+    keycloak: {
+        dev: {
+            "realm": "oli-webservice",
+            "bearer-only": true,
+            "auth-server-url": `http://localhost:${process.env.KC_PORT_EXPOSE}/auth/`,
+            "ssl-required": "external",
+            "resource": "api",
+            "confidential-port": 0
+        },
+        prod: {
+            "realm": "oli-webservice",
+            "bearer-only": true,
+            "auth-server-url": `http://localhost:${process.env.KC_PORT_EXPOSE}/auth/`,
+            "ssl-required": "external",
+            "resource": "api",
+            "confidential-port": 0
+        }
     },
     ipWhitelist: [`${process.env.CLIENT_IP_NET}`, '::1', '::/0']
 }
