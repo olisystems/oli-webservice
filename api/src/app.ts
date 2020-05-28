@@ -54,7 +54,7 @@ const startApp = async () => {
         app.use(keycloak.middleware());
         
         // Routes
-        app.post('/soap', keycloak.protect(), async function (req: Request, res: Response) {
+        app.post('/cb-emt-meterData/soap/v1/meterDataCollectionOut', keycloak.protect(), async function (req: Request, res: Response) {
 
             let postMeterDataRes: any = await postMeterData(dbConnection, req.body);
             res.status(postMeterDataRes.status).send(req.body);

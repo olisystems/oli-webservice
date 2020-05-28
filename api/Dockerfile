@@ -14,6 +14,8 @@ USER root
 
 RUN npm install pm2 -g
 
+USER node
+
 COPY --chown=node:node . .
 
 CMD [ "pm2-runtime", "dist/app.js" ]

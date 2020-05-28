@@ -18,7 +18,7 @@ services:
     environment:
       - KEYCLOAK_USER=${KC_USER}
       - KEYCLOAK_PASSWORD=${KC_PASSWORD}
-      - KEYCLOAK_IMPORT=/tmp/realm-export.json
+      - KEYCLOAK_IMPORT=/tmp/realm/import/oli-webservice-realm.json
     ports:
       - ${KC_PORT_EXPOSE}:8080
     depends_on:

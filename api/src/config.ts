@@ -22,7 +22,7 @@ export const config = {
         dev: {
             "realm": "oli-webservice",
             "bearer-only": true,
-            "auth-server-url": `http://localhost:${process.env.KC_PORT_EXPOSE}/auth/`,
+            "auth-server-url": `http://${process.env.KC_HOST}:${process.env.KC_PORT_EXPOSE}/auth/`,
             "ssl-required": "external",
             "resource": "api",
             "confidential-port": 0
@@ -30,7 +30,7 @@ export const config = {
         prod: {
             "realm": "oli-webservice",
             "bearer-only": true,
-            "auth-server-url": `http://localhost:${process.env.KC_PORT_EXPOSE}/auth/`,
+            "auth-server-url": `http://${process.env.KC_HOST}:${process.env.KC_PORT_EXPOSE}/auth/`,
             "ssl-required": "external",
             "resource": "api",
             "confidential-port": 0
