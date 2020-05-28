@@ -1,4 +1,3 @@
-
 # Backup keycloak realm oli-webservice
 docker exec -it oli-webservicegit_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh \
 -Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export \

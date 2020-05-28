@@ -1,4 +1,3 @@
-
 # Variables
 DIR="api/dist"
 
