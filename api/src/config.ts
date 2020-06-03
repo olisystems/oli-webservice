@@ -22,16 +22,16 @@ export const config = {
         dev: {
             "realm": "oli-webservice",
             "bearer-only": true,
-            "auth-server-url": `http://${process.env.KC_HOST}:${process.env.KC_PORT_EXPOSE}/auth/`,
-            "ssl-required": "external",
+            "auth-server-url": `${process.env.KC_HOST}`,
+            "ssl-required": "NONE",
             "resource": "api",
             "confidential-port": 0
         },
         prod: {
             "realm": "oli-webservice",
             "bearer-only": true,
-            "auth-server-url": `http://${process.env.KC_HOST}:${process.env.KC_PORT_EXPOSE}/auth/`,
-            "ssl-required": "external",
+            "auth-server-url": `${process.env.KC_HOST}`,
+            "ssl-required": "NONE",
             "resource": "api",
             "confidential-port": 0
         }

@@ -1,21 +1,23 @@
+
 if (process.env.NODE_ENV !== 'production') {
+ 
     require('dotenv').config({ path: __dirname + '/../.env' });
 }
-
+import { logger } from './logger';
 import 'reflect-metadata';
 import express = require('express');
 import { Request, Response } from "express";
-const ipfilter = require('express-ipfilter').IpFilter
 import morgan = require('morgan');
 import bodyParser = require('body-parser');
 import compression = require('compression');
 import { config } from './config'
-import { logger } from './logger';
 import { connectDb } from './connect-db';
 import { postMeterData } from './controller';
 import { initKeycloak } from './setup-keycloak';
+
+const ipfilter = require('express-ipfilter').IpFilter;
 const keycloak: any = initKeycloak();
-const port = process.env.SERVER_PORT
+const port = process.env.SERVER_PORT;
 
 export const app: express.Application = express();
 export var dbConnection: any;

@@ -12,6 +12,9 @@ const convert = require('xml-js');
  */
 export async function postMeterData(dbConnection: any, data: any) {
 
+    // TODO:
+    // Validate incoming request body (data)
+    
     let xmlData = data;
     let jsonData = convert.xml2js(xmlData, { compact: false, spaces: 4 });
     let messageHeaderRepository = dbConnection.getRepository(MessageHeader);

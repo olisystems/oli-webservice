@@ -1,0 +1,35 @@
+<x:Envelope
+    xmlns:x="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:met="http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection"
+    xmlns:com="http://enbw.com/esr/SAPPO/Netze/Messsysteme/Common">
+    <x:Header/>
+    <x:Body>
+        <met:ForwardMeterData>
+            <met:MessageHeader>
+                <com:MessageId systemName="?"></com:MessageId>
+                <com:CorrelationId>?</com:CorrelationId>
+                <com:TimeSent>2020-05-20T00:00:00</com:TimeSent>
+                <com:InstanceId>?</com:InstanceId>
+                <com:TenantId>?</com:TenantId>
+                <com:MeterOperatorId>?</com:MeterOperatorId>
+                <com:ExternalMarketParticipantId>?</com:ExternalMarketParticipantId>
+                <com:RoutingKeyServiceBus>?</com:RoutingKeyServiceBus>
+                <com:RoutingKeyExtern>?</com:RoutingKeyExtern>
+            </met:MessageHeader>
+            <met:SmgwId>?</met:SmgwId>
+            <met:LogicalDeviceId>?</met:LogicalDeviceId>
+            <met:Measurement>
+                <met:OBIS>?</met:OBIS>
+                <met:CapturePeriod>?</met:CapturePeriod>
+                <met:Entry>
+                    <met:Timestamp>2020-05-20T00:00:00</met:Timestamp>
+                    <met:Value>?</met:Value>
+                    <met:Scaler>45</met:Scaler>
+                    <met:Unit>?</met:Unit>
+                    <met:Status>?</met:Status>
+                </met:Entry>
+            </met:Measurement>
+            <met:RawData>?</met:RawData>
+        </met:ForwardMeterData>
+    </x:Body>
+</x:Envelope>

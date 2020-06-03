@@ -1,1 +1,4 @@
 .env
+nginx/certs/nginx-selfsigned.crt
+nginx/certs/nginx-selfsigned.key
+keycloak/*.log
