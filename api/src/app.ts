@@ -62,6 +62,16 @@ const startApp = async () => {
             res.status(postMeterDataRes.status).send(req.body);
         });
 
+        app.get('/test', async function (req: Request, res: Response) {
+
+            res.status(200).json({ type: 'test' });
+        });
+
+        app.post('/test', async function (req: Request, res: Response) {
+
+            res.status(200).json({ type: 'test' });
+        });
+
         // Errors
         app.use((error: any, req: any, res: any, _next: any) => {
 
