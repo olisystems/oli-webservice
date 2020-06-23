@@ -33,7 +33,7 @@ userRouter.get('/users/:pk', async function(req: Request, res: Response){
 userRouter.post('/users', async function(req: Request, res: Response){
     
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
-    if (true) {
+    if (isAuthorized) {
         let postUserRes: any = await postUser(dbConnection, req.body);
         res.status(postUserRes.status).json(postUserRes.data);
     } else {
