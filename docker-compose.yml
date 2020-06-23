@@ -38,21 +38,21 @@ services:
     networks:
       - service-network
 
-#  webserver:
-#    build:
-#      context: ./nginx
-#      dockerfile: Dockerfile
-#    container_name: oli_webservice_nginx
-#    restart: unless-stopped
-#    ports:
-#      - "80:80"
-#      - "443:443"
-#    volumes:
-#      - ./nginx/certs:/etc/nginx/certs
-#    depends_on:
-#      - api
-#    networks:
-#      - service-network
+  webserver:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: oli_webservice_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/certs:/etc/nginx/certs
+    depends_on:
+      - api
+    networks:
+      - service-network
 
 networks:
   service-network:

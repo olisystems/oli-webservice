@@ -5,7 +5,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 import { logger } from './logger';
 import 'reflect-metadata';
+import fs = require('fs');
 import express = require('express');
+import https = require('https');
 import morgan = require('morgan');
 import bodyParser = require('body-parser');
 import { config } from './config'
@@ -34,7 +36,7 @@ const startApp = async () => {
     if (dbConnection) {
 
         logger.info(`successfully connected to ${config.db.connection.type}`);
-        
+
         // Develop log
         if (process.env.NODE_ENV !== 'production') {
             app.use(morgan('dev'));
@@ -43,24 +45,29 @@ const startApp = async () => {
         // IP Filter
         // TODO: uncoment
         // app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
-        
-        // Body parsers
-        app.use(bodyParser.urlencoded({extended: true}));
-        app.use(bodyParser.json());
-        
-        // Meter data routes
-        app.use('', meterDataRouter);
 
-        // User routes
-        app.use('', userRouter);
+        // Body parsers
+        app.use(bodyParser.urlencoded({ extended: true }));
+        app.use(bodyParser.json());
+
+        // Meter data routes
+        app.use('/', meterDataRouter);
         
+        // User routes
+        app.use('/users', userRouter);
+        
+        app.post('/test', function(req, res){
+    
+            res.status(200).json({"message": "test successfull"});
+        });
+
         // Errors
         app.use((error: any, req: any, res: any, _next: any) => {
 
             let errorRes: object = {};
-            
+
             if (error.name === 'IpDeniedError') {
-                
+
                 logger.error(error);
                 res.status(error.status);
                 errorRes = {
@@ -71,7 +78,7 @@ const startApp = async () => {
 
             res.json(errorRes)
         });
-        
+
         // http server
         app.listen(port, function () {
             logger.info(`server is running on port: ${port}`);

@@ -8,7 +8,7 @@ import { isAuthorizedAdmin } from '../auth';
 export var userRouter = express.Router();
 
 
-userRouter.get('/users', async function(req: Request, res: Response){
+userRouter.get('/', async function(req: Request, res: Response){
       
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {
@@ -19,7 +19,7 @@ userRouter.get('/users', async function(req: Request, res: Response){
     }
 });
 
-userRouter.get('/users/:pk', async function(req: Request, res: Response){
+userRouter.get('/:pk', async function(req: Request, res: Response){
     
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {
@@ -30,7 +30,7 @@ userRouter.get('/users/:pk', async function(req: Request, res: Response){
     }
 });
 
-userRouter.post('/users', async function(req: Request, res: Response){
+userRouter.post('/', async function(req: Request, res: Response){
     
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {
@@ -41,7 +41,7 @@ userRouter.post('/users', async function(req: Request, res: Response){
     }
 });
 
-userRouter.patch('/users/:pk', async function(req: Request, res: Response){
+userRouter.patch('/:pk', async function(req: Request, res: Response){
     
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {
@@ -52,7 +52,7 @@ userRouter.patch('/users/:pk', async function(req: Request, res: Response){
     }
 });
 
-userRouter.delete('/users/:pk', async function(req: Request, res: Response){
+userRouter.delete('/:pk', async function(req: Request, res: Response){
     
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {

@@ -67,23 +67,22 @@ export async function isAuthorizedAdmin(dbConnection: any, reqHeader: any) {
     return new Promise (async (resolve) => {
 
         if (!reqHeader.authorization) {
-            
             resolve(false);
         } else {
-            
+
             authStringDecoded = encodeBase64.decode(reqHeader.authorization.split(' ')[1], 'base64');
             nameReq  = authStringDecoded.split(':')[0];
             passwordReq = authStringDecoded.split(':')[1];
         }
 
         try {
-            
+
             let getUser = await userRepository.find({
                 select: ["name", "password"],
                 where: { name: nameReq, isAdmin: true } 
             });
+
             let passwordIsEqual = await bcrypt.compare(passwordReq, getUser[0].password);
-            console.log(getUser);
 
             if (passwordIsEqual) {
                 resolve(true);
@@ -92,7 +91,6 @@ export async function isAuthorizedAdmin(dbConnection: any, reqHeader: any) {
             }
 
         } catch (error) {
-            
             logger.error(error);
             resolve(false)
         }
