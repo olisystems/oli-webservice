@@ -1,22 +1,18 @@
 
 if (process.env.NODE_ENV !== 'production') {
- 
     require('dotenv').config({ path: __dirname + '/../.env' });
 }
+
 import { logger } from './logger';
 import 'reflect-metadata';
 import express = require('express');
-import { Request, Response } from "express";
 import morgan = require('morgan');
 import bodyParser = require('body-parser');
-import compression = require('compression');
 import { config } from './config'
 import { connectDb } from './connect-db';
-import { postMeterData } from './controller';
-import { initKeycloak } from './setup-keycloak';
+import { userRouter, meterDataRouter } from './route';
 
 const ipfilter = require('express-ipfilter').IpFilter;
-const keycloak: any = initKeycloak();
 const port = process.env.SERVER_PORT;
 
 export const app: express.Application = express();
@@ -28,9 +24,9 @@ const startApp = async () => {
 
     // Log mode
     if (process.env.NODE_ENV === 'production') {
-        logger.info('in production mode');
+        logger.info('service is running in production mode');
     } else {
-        logger.info('in develop mode');
+        logger.info('service is running in develop mode');
     }
 
     // Connact to database
@@ -39,39 +35,25 @@ const startApp = async () => {
 
         logger.info(`successfully connected to ${config.db.connection.type}`);
         
-
         // Develop log
         if (process.env.NODE_ENV !== 'production') {
             app.use(morgan('dev'));
         }
 
-        // IP filter
-        // TODO: uncommend
+        // IP Filter
+        // TODO: uncoment
         // app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
-
-        // Body parser
-        app.use(bodyParser.raw({ type: function () { return true; }, limit: '5mb' }));
-
-        // Keycloak middleware
-        app.use(keycloak.middleware());
         
-        // Routes
-        app.post('/cb-emt-meterData/soap/v1/meterDataCollectionOut', keycloak.protect(), async function (req: Request, res: Response) {
+        // Body parsers
+        app.use(bodyParser.urlencoded({extended: true}));
+        app.use(bodyParser.json());
+        
+        // Meter data routes
+        app.use('', meterDataRouter);
 
-            let postMeterDataRes: any = await postMeterData(dbConnection, req.body);
-            res.status(postMeterDataRes.status).send(req.body);
-        });
-
-        app.get('/test', async function (req: Request, res: Response) {
-
-            res.status(200).json({ type: 'test' });
-        });
-
-        app.post('/test', async function (req: Request, res: Response) {
-
-            res.status(200).json({ type: 'test' });
-        });
-
+        // User routes
+        app.use('', userRouter);
+        
         // Errors
         app.use((error: any, req: any, res: any, _next: any) => {
 
@@ -89,7 +71,7 @@ const startApp = async () => {
 
             res.json(errorRes)
         });
-
+        
         // http server
         app.listen(port, function () {
             logger.info(`server is running on port: ${port}`);

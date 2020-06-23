@@ -10,28 +10,9 @@ services:
       - POSTGRES_PASSWORD=${PG_PASSWORD}
       - POSTGRES_DB=${PG_DATABASE}
     volumes:
-      - ./db/data:/var/lib/postgresql/data
       - ./db/installation:/docker-entrypoint-initdb.d
     ports:
       - ${PG_PORT_EXPOSE}:5432
-    networks:
-      - service-network
-  
-  keycloak:
-    image: jboss/keycloak
-    container_name: oli_webservice_keycloak
-    environment:
-      - KEYCLOAK_USER=${KC_USER}
-      - KEYCLOAK_PASSWORD=${KC_PASSWORD}
-      - KEYCLOAK_IMPORT=/tmp/realm/import/oli-webservice-realm.json
-      - PROXY_ADDRESS_FORWARDING=true
-    ports:
-      - ${KC_PORT}:8080
-    depends_on:
-      - db
-    volumes:
-      - ./keycloak:/tmp
-    restart: unless-stopped
     networks:
       - service-network
 
@@ -48,32 +29,30 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASSWORD=${PG_PASSWORD}
       - PG_DATABASE=${PG_DATABASE}
-      - KC_HOST=${KC_HOST}
     volumes:
         - ./api/logs:/home/node/app/logs
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     depends_on:
       - db
-      - keycloak
     networks:
       - service-network
 
-  webserver:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    container_name: oli_webservice_nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/certs:/etc/nginx/certs
-    depends_on:
-      - api
-    networks:
-      - service-network
+#  webserver:
+#    build:
+#      context: ./nginx
+#      dockerfile: Dockerfile
+#    container_name: oli_webservice_nginx
+#    restart: unless-stopped
+#    ports:
+#      - "80:80"
+#      - "443:443"
+#    volumes:
+#      - ./nginx/certs:/etc/nginx/certs
+#    depends_on:
+#      - api
+#    networks:
+#      - service-network
 
 networks:
   service-network:

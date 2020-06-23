@@ -9,7 +9,6 @@ create extension if not exists "uuid-ossp";
 -- ----------------------------------------------------
 
 -- Message header
--- drop table if exists public.t_message_header cascade;
 create table if not exists public.t_message_header(
     pk uuid default uuid_generate_v4() primary key,
     message_id text,
@@ -40,7 +39,6 @@ from public.t_message_header;
 
 
 -- Measurement
--- drop table if exists public.t_measurement cascade;
 create table if not exists public.t_measurement(
     pk uuid default uuid_generate_v4() primary key,
     obis text,
@@ -67,7 +65,6 @@ from public.t_measurement;
 
 
 -- Meter data
--- drop table if exists public.t_meter_data cascade;
 create table if not exists public.t_meter_data(
     pk uuid default uuid_generate_v4() primary key,
     message_header_fk uuid,
@@ -118,3 +115,30 @@ select
 from t_meter_data meda
 left join public.t_message_header mehe on meda.message_header_fk = mehe.pk
 left join public.t_measurement meas on meda.measurement_fk = meas.pk;
+
+
+-- Users
+create table if not exists public.t_users (
+	pk uuid primary key default uuid_generate_v4(),
+	name text unique not null,
+	password text not null,
+	company text,
+	created_at timestamp default now(),
+	email text,
+	is_admin boolean default false
+);
+
+drop view if exists public.v_users;
+create view public.v_users as
+select
+	pk "pk",
+	name "name",
+	password "password",
+	company "company",
+	created_at "createdAt",
+	email "email",
+	is_admin "isAdmin"
+from public.t_users;
+
+insert into public.t_users ( name, password, is_admin ) values ('oli', 'a-bcrypt-$2b$-hashed-password', true);
+insert into public.t_users (name, password, is_admin ) values ('enbw', 'a-bcrypt-$2b$-hashed-password', false);

@@ -23,7 +23,7 @@ export async function connectDb() {
                 retries -= 1;
                 logger.error(error);
                 logger.error(`retries left: ${retries}`);
-                await new Promise(res => setTimeout(res, config.db.retryTimeout));    // wait 5 seconds
+                await new Promise(res => setTimeout(res, config.db.retryTimeout));
             }
         }
         resolve(false)

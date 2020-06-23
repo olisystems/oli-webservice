@@ -15,26 +15,8 @@ export const config = {
             synchronize: false,
             logging: false
         },
-        retries: 5,
+        retries: 10,
         retryTimeout: 5000   // 5000 milli seconds
     },
-    keycloak: {
-        dev: {
-            "realm": "oli-webservice",
-            "bearer-only": true,
-            "auth-server-url": `${process.env.KC_HOST}`,
-            "ssl-required": "NONE",
-            "resource": "api",
-            "confidential-port": 0
-        },
-        prod: {
-            "realm": "oli-webservice",
-            "bearer-only": true,
-            "auth-server-url": `${process.env.KC_HOST}`,
-            "ssl-required": "NONE",
-            "resource": "api",
-            "confidential-port": 0
-        }
-    },
-    ipWhitelist: [`${process.env.CLIENT_IP_NET}`, '::1', '::/0']
+    ipWhitelist: [`${process.env.CLIENT_IP_NET}`]
 }
