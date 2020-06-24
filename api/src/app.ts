@@ -6,7 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 import { logger } from './logger';
 import 'reflect-metadata';
 import express = require('express');
-import https = require('https');
 import morgan = require('morgan');
 import bodyParser = require('body-parser');
 import { config } from './config'
@@ -14,6 +13,7 @@ import { connectDb } from './connect-db';
 import { userRouter, meterDataRouter } from './route';
 
 const ipfilter = require('express-ipfilter').IpFilter;
+const convert = require('xml-js');
 const port = process.env.SERVER_PORT;
 
 export const app: express.Application = express();
@@ -42,7 +42,7 @@ const startApp = async () => {
         }
 
         // IP Filter
-        app.use(ipfilter([ config.ipWhitelist, '::ffff:127.0.0.1' ], { mode: 'allow' }))
+        app.use(ipfilter([config.ipWhitelist, '::ffff:' + config.ipWhitelist, '::ffff:127.0.0.1'], { mode: 'allow' }))
 
         // Body parsers
         app.use(bodyParser.urlencoded({ extended: true }));
@@ -65,11 +65,13 @@ const startApp = async () => {
                 res.status(error.status);
                 errorRes = {
                     message: 'Access denied',
+                    host: req.headers.host,
+                    ip: req.ip,
                     error: error
                 }
             }
 
-            res.json(errorRes)
+            res.send(convert.json2xml(errorRes, {compact: true, ignoreComment: true, spaces: 4}))
         });
 
         // http server

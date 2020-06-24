@@ -1,11 +1,14 @@
 
 import express = require('express');
 import bodyParser = require('body-parser');
-import xml = require('xml');
 import { Request, Response } from 'express';
 import { postMeterData } from '../controller';
 import { dbConnection } from '../app';
 import { isAuthorizedUser } from '../auth';
+import { errorResponses } from '../assets';
+import { config } from '../config';
+
+const convert = require('xml-js');
 
 export var meterDataRouter = express.Router();
 
@@ -20,11 +23,11 @@ meterDataRouter.post('/', bodyParser.raw({ type: function () { return true; }, l
         if (postMeterDataRes.data !== undefined) {
             res.status(postMeterDataRes.status).send(req.body);
         } else if (postMeterDataRes.error) {
-            res.status(postMeterDataRes.status).send(xml(postMeterDataRes.error));
+            res.status(postMeterDataRes.status).send(convert.json2xml(postMeterDataRes.error, config.xmlOptions));
         } else {
-            res.status(500).send(xml({"message": "Internal server error"}));    
+            res.status(500).send(convert.json2xml(errorResponses.unauthorized, config.xmlOptions));
         }
     } else {
-        res.status(401).send(xml({"message": "Unauthorized"}));
+        res.status(401).send(convert.json2xml(errorResponses.unauthorized, config.xmlOptions));
     }
 });

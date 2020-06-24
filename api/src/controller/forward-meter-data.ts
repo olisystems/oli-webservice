@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { MessageHeader, Measurement, MeterData } from '../entity';
 import { IMessageHeader, IMeasurement, IMeterData } from '../model';
 import { logger } from '../logger';
+import { errorResponses } from '../assets';
 const convert = require('xml-js');
 
 
@@ -47,7 +48,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             logger.error(error);
             resolve({
                 status: 400,
-                error: {"message": "Bad Request"}
+                error: errorResponses.badRequest
             })
         }
 
@@ -59,7 +60,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             logger.error(error);
             resolve({
                 status: 500,
-                error: error
+                error: errorResponses.internal
             })
         }
 
@@ -71,7 +72,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             logger.error(error);
             resolve({
                 status: 500,
-                error: error
+                error: errorResponses.internal
             })
         }
 
@@ -89,7 +90,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             logger.error(error);
             resolve({
                 status: 500,
-                error: error
+                error: errorResponses.internal
             })
         }
 
