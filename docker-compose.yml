@@ -5,6 +5,7 @@ services:
   db:
     image: "postgres:12"
     container_name: oli_webservice_postgres
+    restart: unless-stopped
     environment:
       - POSTGRES_USER=${PG_USER}
       - POSTGRES_PASSWORD=${PG_PASSWORD}
@@ -14,13 +15,35 @@ services:
     ports:
       - ${PG_PORT_EXPOSE}:5432
     networks:
-      - service-network
+      - soap-service-network
 
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    container_name: oli_webservicegit_pgbackups
+    restart: unless-stopped
+    volumes:
+      - ./db/backups:/backups
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=${PG_HOST}
+      - POSTGRES_DB=${PG_DATABASE}
+      - POSTGRES_USER=${PG_USER}
+      - POSTGRES_PASSWORD=${PG_PASSWORD}
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_WEEKS=4
+      - HEALTHCHECK_PORT=80
+    networks:
+      - soap-service-network
+  
   api:
     build:
       context: ./api
       dockerfile: Dockerfile
     container_name: oli_webservice_api
+    restart: unless-stopped
     environment:
       - SERVER_PORT=${SERVER_PORT}
       - NODE_ENV=${NODE_ENV}
@@ -36,7 +59,7 @@ services:
     depends_on:
       - db
     networks:
-      - service-network
+      - soap-service-network
 
   webserver:
     build:
@@ -52,8 +75,8 @@ services:
     depends_on:
       - api
     networks:
-      - service-network
+      - soap-service-network
 
 networks:
-  service-network:
+  soap-service-network:
     driver: bridge
