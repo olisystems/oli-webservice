@@ -42,24 +42,18 @@ const startApp = async () => {
         }
 
         // IP Filter
-        // TODO: uncoment
-        // app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
+        app.use(ipfilter([ config.ipWhitelist, '::ffff:127.0.0.1' ], { mode: 'allow' }))
 
         // Body parsers
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
 
         // Meter data routes
-        app.use('/', meterDataRouter);
+        app.use('/cb-emt-meterData/soap/v1/meterDataCollectionOut', meterDataRouter);
         
         // User routes
-        app.use('/users', userRouter);
+        app.use('/cb-emt-meterData/rest/v1/users', userRouter);
         
-        app.post('/test', function(req, res){
-    
-            res.status(200).json({"message": "test successfull"});
-        });
-
         // Errors
         app.use((error: any, req: any, res: any, _next: any) => {
 
