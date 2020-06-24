@@ -18,6 +18,5 @@ export const config = {
         retries: 10,
         retryTimeout: 5000   // 5000 milli seconds
     },
-    ipWhitelist: [`${process.env.CLIENT_IP_NET}`, `::ffff:${process.env.CLIENT_IP_NET}`, `${process.env.CLIENT_IP_NET}/24`, `::ffff:${process.env.CLIENT_IP_NET}/24`, `::ffff:127.0.0.1`, `::ffff:192.168.176.5`],
     xmlOptions: {compact: true, ignoreComment: true, spaces: 4}
 }

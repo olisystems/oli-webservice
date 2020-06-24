@@ -11,8 +11,8 @@ import bodyParser = require('body-parser');
 import { config } from './config'
 import { connectDb } from './connect-db';
 import { userRouter, meterDataRouter } from './route';
+import { errorResponses } from './assets';
 
-const ipfilter = require('express-ipfilter').IpFilter;
 const convert = require('xml-js');
 const port = process.env.SERVER_PORT;
 
@@ -41,9 +41,6 @@ const startApp = async () => {
             app.use(morgan('dev'));
         }
 
-        // IP Filter
-        app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
-
         // Body parsers
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
@@ -57,20 +54,7 @@ const startApp = async () => {
         // Errors
         app.use((error: any, req: any, res: any, _next: any) => {
 
-            let errorRes: object = {};
-
-            if (error.name === 'IpDeniedError') {
-
-                logger.error(error);
-                res.status(error.status);
-                errorRes = {
-                    message: 'Access denied',
-                    host: req.headers.host,
-                    ip: req.ip,
-                    error: error
-                }
-            }
-
+            let errorRes = errorResponses.internal;
             res.send(convert.json2xml(errorRes, {compact: true, ignoreComment: true, spaces: 4}))
         });
 
