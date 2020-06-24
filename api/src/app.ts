@@ -42,7 +42,7 @@ const startApp = async () => {
         }
 
         // IP Filter
-        app.use(ipfilter([config.ipWhitelist, '::ffff:' + config.ipWhitelist, '::ffff:127.0.0.1'], { mode: 'allow' }))
+        app.use(ipfilter(config.ipWhitelist, { mode: 'allow' }))
 
         // Body parsers
         app.use(bodyParser.urlencoded({ extended: true }));
