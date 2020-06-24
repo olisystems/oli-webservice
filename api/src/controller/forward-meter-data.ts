@@ -11,31 +11,48 @@ const convert = require('xml-js');
  * @param {any} data request body as plain xml
  */
 export async function postMeterData(dbConnection: any, data: any) {
-
-    // TODO:
-    // Validate incoming request body (data)
     
     let xmlData = data;
-    let jsonData = convert.xml2js(xmlData, { compact: false, spaces: 4 });
     let messageHeaderRepository = dbConnection.getRepository(MessageHeader);
     let measurementRepository = dbConnection.getRepository(Measurement);
     let meterDataRepository = dbConnection.getRepository(MeterData);
-
-    let messageHeader: IMessageHeader = constructMessageHeader(jsonData.elements[0].elements[1].elements[0].elements[0].elements);
-    let measurement: IMeasurement = constructMeasurement(jsonData.elements[0].elements[1].elements[0].elements[3].elements);
-    let meterData: IMeterData = {};
-
-    let smgwId: string = jsonData.elements[0].elements[1].elements[0].elements[1].elements[0].text;
-    let logicalDeviceId: string = jsonData.elements[0].elements[1].elements[0].elements[2].elements[0].text;
-    let rawData: string = jsonData.elements[0].elements[1].elements[0].elements[4].elements[0].text;    
-
     let postMessageHeader: IMessageHeader;
     let postMeasurement: IMeasurement;
     let postMeterData: IMeterData;
 
+    let jsonData;
+    
+    let messageHeader: IMessageHeader;
+    let measurement: IMeasurement;
+    let meterData: IMeterData;
+
+    let smgwId: string;
+    let logicalDeviceId: string;
+    let rawData: string;
+
+
     return new Promise(async (resolve) => {
 
         try {
+            
+            jsonData = convert.xml2js(xmlData, { compact: false, spaces: 4 });
+            messageHeader = constructMessageHeader(jsonData.elements[0].elements[1].elements[0].elements[0].elements);
+            measurement = constructMeasurement(jsonData.elements[0].elements[1].elements[0].elements[3].elements);
+            meterData = {};
+            smgwId = jsonData.elements[0].elements[1].elements[0].elements[1].elements[0].text;
+            logicalDeviceId = jsonData.elements[0].elements[1].elements[0].elements[2].elements[0].text;
+            rawData = jsonData.elements[0].elements[1].elements[0].elements[4].elements[0].text;    
+        } catch (error) {
+            
+            logger.error(error);
+            resolve({
+                status: 400,
+                error: {"message": "Bad Request"}
+            })
+        }
+
+        try {
+            
             postMessageHeader = await messageHeaderRepository.save(messageHeader);
         } catch (error) {
             
@@ -47,6 +64,7 @@ export async function postMeterData(dbConnection: any, data: any) {
         }
 
         try {
+            
             postMeasurement = await measurementRepository.save(measurement);
         } catch (error) {
             
@@ -58,6 +76,7 @@ export async function postMeterData(dbConnection: any, data: any) {
         }
 
         try {
+            
             meterData.pk = uuid();
             meterData.messageHeaderFK = messageHeader.pk;
             meterData.smgwId = smgwId;
@@ -133,6 +152,7 @@ function constructMeasurement(data: any): IMeasurement {
  * @param {string} elementName value of filer name property
  */
 function getObjectByName(elementArray: any, elementName: string) {
+    
     return elementArray.filter((obj: any) => {
         return obj.name === elementName
     })

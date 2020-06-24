@@ -1,4 +1,6 @@
 .env
+src/
+resources/
 node_modules/
 logs/error.log
 logs/info.log

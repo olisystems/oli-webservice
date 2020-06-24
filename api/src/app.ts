@@ -5,7 +5,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 import { logger } from './logger';
 import 'reflect-metadata';
-import fs = require('fs');
 import express = require('express');
 import https = require('https');
 import morgan = require('morgan');

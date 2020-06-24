@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Body>
+    <SOAP-ENV:Fault>
+      <faultcode>SOAP-ENV:Server</faultcode>
+      <faultstring>null</faultstring>
+      <detail>
+        <IBResponse type="error">
+          <DefaultTitle>Integration Broker Response</DefaultTitle>
+          <StatusCode>20</StatusCode>
+          <MessageID>535</MessageID>
+          <DefaultMessage><![CDATA[User Password required for Service Operation CI_SH_USERMAINT_CI_UP. (158,535)]]></DefaultMessage>
+          <MessageParameters>
+            <Parameter><![CDATA[CI_SH_USERMAINT_CI_UP]]></Parameter>
+          </MessageParameters>
+        </IBResponse>
+      </detail>
+    </SOAP-ENV:Fault>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
