@@ -1,6 +1,5 @@
 .env
 node_modules/
-dist/
 logs/error.log
 logs/info.log
 logs/verbose.log

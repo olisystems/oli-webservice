@@ -140,5 +140,5 @@ select
 	is_admin "isAdmin"
 from public.t_users;
 
-insert into public.t_users ( name, password, is_admin ) values ('oli', 'a-bcrypt-$2b$-hashed-password', true);
-insert into public.t_users (name, password, is_admin ) values ('enbw', 'a-bcrypt-$2b$-hashed-password', false);
+insert into public.t_users ( name, password, is_admin ) values ('admin-user', '$2b$-hashed-password', true);
+insert into public.t_users (name, password, is_admin ) values ('normal-user', '$2b$-hashed-password', false);
