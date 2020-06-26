@@ -14,6 +14,7 @@ const express = require("express");
 const controller_1 = require("../controller");
 const app_1 = require("../app");
 const auth_1 = require("../auth");
+const assets_1 = require("../assets");
 exports.userRouter = express.Router();
 exports.userRouter.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -23,7 +24,7 @@ exports.userRouter.get('/', function (req, res) {
             res.status(postUserRes.status).json(postUserRes.data);
         }
         else {
-            res.status(401).json({ "message": "Unauthorized" });
+            res.status(401).json(assets_1.errorResponses.unauthorized);
         }
     });
 });
@@ -35,7 +36,7 @@ exports.userRouter.get('/:pk', function (req, res) {
             res.status(postUserRes.status).json(postUserRes.data);
         }
         else {
-            res.status(401).json({ "message": "Unauthorized" });
+            res.status(401).json(assets_1.errorResponses.unauthorized);
         }
     });
 });
@@ -47,7 +48,7 @@ exports.userRouter.post('/', function (req, res) {
             res.status(postUserRes.status).json(postUserRes.data);
         }
         else {
-            res.status(401).json({ "message": "Unauthorized" });
+            res.status(401).json(assets_1.errorResponses.unauthorized);
         }
     });
 });
@@ -59,7 +60,7 @@ exports.userRouter.patch('/:pk', function (req, res) {
             res.status(postUserRes.status).json(postUserRes.data);
         }
         else {
-            res.status(401).json({ "message": "Unauthorized" });
+            res.status(401).json(assets_1.errorResponses.unauthorized);
         }
     });
 });
@@ -71,7 +72,7 @@ exports.userRouter.delete('/:pk', function (req, res) {
             res.status(postUserRes.status).json(postUserRes.data);
         }
         else {
-            res.status(401).json({ "message": "Unauthorized" });
+            res.status(401).json(assets_1.errorResponses.unauthorized);
         }
     });
 });

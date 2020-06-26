@@ -9,34 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.meterDataRouterSoap = void 0;
+exports.meterDataRouter = void 0;
 const express = require("express");
-const bodyParser = require("body-parser");
 const controller_1 = require("../controller");
 const app_1 = require("../app");
 const auth_1 = require("../auth");
 const assets_1 = require("../assets");
-const config_1 = require("../config");
-const convert = require('xml-js');
-exports.meterDataRouterSoap = express.Router();
-exports.meterDataRouterSoap.post('/', bodyParser.raw({ type: function () { return true; }, limit: '5mb' }), function (req, res) {
+exports.meterDataRouter = express.Router();
+exports.meterDataRouter.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        let isAuthorized = yield auth_1.isAuthorizedUser(app_1.dbConnection, req.headers);
-        res.type('application/xml');
+        let isAuthorized = yield auth_1.isAuthorizedAdmin(app_1.dbConnection, req.headers);
         if (isAuthorized) {
-            let postMeterDataRes = yield controller_1.postMeterData(app_1.dbConnection, req.body);
-            if (postMeterDataRes.data !== undefined) {
-                res.status(postMeterDataRes.status).send(req.body);
-            }
-            else if (postMeterDataRes.error) {
-                res.status(postMeterDataRes.status).send(convert.json2xml(postMeterDataRes.error, config_1.config.xmlOptions));
-            }
-            else {
-                res.status(500).send(convert.json2xml(assets_1.errorResponses.unauthorized, config_1.config.xmlOptions));
-            }
+            let getMeterDataRes = yield controller_1.getMeterData(app_1.dbConnection);
+            res.status(getMeterDataRes.status).send(getMeterDataRes.data);
         }
         else {
-            res.status(401).send(convert.json2xml(assets_1.errorResponses.unauthorized, config_1.config.xmlOptions));
+            res.status(401).send(assets_1.errorResponses.unauthorized);
         }
     });
 });
