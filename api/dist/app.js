@@ -40,7 +40,7 @@ const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
         }
         exports.app.use(bodyParser.urlencoded({ extended: true }));
         exports.app.use(bodyParser.json());
-        exports.app.use('/cb-emt-meterData/soap/v1/meterDataCollectionOut', route_1.meterDataRouter);
+        exports.app.use('/cb-emt-meterData/soap/v1/meterDataCollectionOut', route_1.meterDataRouterSoap);
         exports.app.use('/cb-emt-meterData/rest/v1/users', route_1.userRouter);
         exports.app.use((error, req, res, _next) => {
             let errorRes = assets_1.errorResponses.internal;

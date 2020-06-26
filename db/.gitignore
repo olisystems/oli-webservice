@@ -1,3 +1,6 @@
+backups/daily/
+backups/monthly/
+backups/weekly/
 backups/single/*.sql
 backups/single/*.gzip
 backups/single/*.gz

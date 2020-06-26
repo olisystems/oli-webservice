@@ -10,7 +10,7 @@ import morgan = require('morgan');
 import bodyParser = require('body-parser');
 import { config } from './config'
 import { connectDb } from './connect-db';
-import { userRouter, meterDataRouter } from './route';
+import { userRouter, meterDataRouter, meterDataRouterSoap } from './route';
 import { errorResponses } from './assets';
 
 const convert = require('xml-js');
@@ -45,10 +45,13 @@ const startApp = async () => {
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
 
-        // Meter data routes
-        app.use('/cb-emt-meterData/soap/v1/meterDataCollectionOut', meterDataRouter);
+        // Meter data route: SOAP
+        app.use('/cb-emt-meterData/soap/v1/meterDataCollectionOut', meterDataRouterSoap);
+
+        // Meter data route: REST
+        app.use('/cb-emt-meterData/rest/v1/meterDataCollectionOut', meterDataRouter);
         
-        // User routes
+        // User route: REST
         app.use('/cb-emt-meterData/rest/v1/users', userRouter);
         
         // Errors

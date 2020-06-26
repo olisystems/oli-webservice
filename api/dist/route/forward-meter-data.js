@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.meterDataRouter = void 0;
+exports.meterDataRouterSoap = void 0;
 const express = require("express");
 const bodyParser = require("body-parser");
 const controller_1 = require("../controller");
@@ -18,8 +18,8 @@ const auth_1 = require("../auth");
 const assets_1 = require("../assets");
 const config_1 = require("../config");
 const convert = require('xml-js');
-exports.meterDataRouter = express.Router();
-exports.meterDataRouter.post('/', bodyParser.raw({ type: function () { return true; }, limit: '5mb' }), function (req, res) {
+exports.meterDataRouterSoap = express.Router();
+exports.meterDataRouterSoap.post('/', bodyParser.raw({ type: function () { return true; }, limit: '5mb' }), function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let isAuthorized = yield auth_1.isAuthorizedUser(app_1.dbConnection, req.headers);
         res.type('application/xml');

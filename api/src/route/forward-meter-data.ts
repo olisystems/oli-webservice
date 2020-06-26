@@ -1,33 +1,21 @@
 
 import express = require('express');
-import bodyParser = require('body-parser');
 import { Request, Response } from 'express';
-import { postMeterData } from '../controller';
+import { getMeterData } from '../controller';
 import { dbConnection } from '../app';
-import { isAuthorizedUser } from '../auth';
+import { isAuthorizedAdmin } from '../auth';
 import { errorResponses } from '../assets';
-import { config } from '../config';
-
-const convert = require('xml-js');
 
 export var meterDataRouter = express.Router();
 
 
-meterDataRouter.post('/', bodyParser.raw({ type: function () { return true; }, limit: '5mb' }), async function (req: Request, res: Response) {
-    
-    let isAuthorized = await isAuthorizedUser(dbConnection, req.headers);
-    res.type('application/xml');
-    
+meterDataRouter.get('/', async function (req: Request, res: Response) {
+
+    let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {
-        let postMeterDataRes: any = await postMeterData(dbConnection, req.body);
-        if (postMeterDataRes.data !== undefined) {
-            res.status(postMeterDataRes.status).send(req.body);
-        } else if (postMeterDataRes.error) {
-            res.status(postMeterDataRes.status).send(convert.json2xml(postMeterDataRes.error, config.xmlOptions));
-        } else {
-            res.status(500).send(convert.json2xml(errorResponses.unauthorized, config.xmlOptions));
-        }
+        let getMeterDataRes: any = await getMeterData(dbConnection);
+        res.status(getMeterDataRes.status).send(getMeterDataRes.data);
     } else {
-        res.status(401).send(convert.json2xml(errorResponses.unauthorized, config.xmlOptions));
+        res.status(401).send(errorResponses.unauthorized);
     }
 });

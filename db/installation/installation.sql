@@ -88,30 +88,29 @@ select
 from public.t_meter_data;
 
 
--- Meter data total set
 drop view if exists public.v_meter_data_set;
 create view public.v_meter_data_set as
 select
-    meda.pk,
-    meda.smgw_id,
-    meda.logical_device_id,
-    meda.raw_data,
-    mehe.message_id,
-    mehe.correlation_id,
-    mehe.time_sent,
-    mehe.instance_id,
-    mehe.tenant_id,
-    mehe.meter_operator_id,
-    mehe.external_market_participant_id,
-    mehe.routing_key_service_bus ,
-    mehe.routing_key_extern,
-    meas.obis,
-    meas.capture_period,
-    meas.entry_timestamp,
-    meas.entry_value,
-    meas.entry_scaler,
-    meas.entry_unit,
-    meas.entry_status
+    meda.pk "pk",
+    meda.smgw_id "smgwId",
+    meda.logical_device_id "logicalDeviceId",
+    meda.raw_data "rawData",
+    mehe.message_id "messageId",
+    mehe.correlation_id "correlationId",
+    mehe.time_sent "timeSent",
+    mehe.instance_id "instanceId",
+    mehe.tenant_id "tenantId",
+    mehe.meter_operator_id "meterOperatorId",
+    mehe.external_market_participant_id "externalMarketParticipantId",
+    mehe.routing_key_service_bus "routingKeyServiceBus",
+    mehe.routing_key_extern "routingKeyExtern",
+    meas.obis "obis",
+    meas.capture_period "capturePeriod",
+    meas.entry_timestamp "entryTimestamp",
+    meas.entry_value "entryValue",
+    meas.entry_scaler "entryScaler",
+    meas.entry_unit "entryUnit",
+    meas.entry_status "entryStatus"
 from t_meter_data meda
 left join public.t_message_header mehe on meda.message_header_fk = mehe.pk
 left join public.t_measurement meas on meda.measurement_fk = meas.pk;
