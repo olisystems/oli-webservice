@@ -3,32 +3,32 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorResponses = void 0;
 exports.errorResponses = {
     badRequest: {
-        message: "Bad request",
+        message: 'Bad request',
         error: {
-            name: "BadRequest",
+            name: 'BadRequest',
             statusCode: 400,
             status: 400,
-            level: "error",
+            level: 'error',
             timestamp: new Date().toISOString()
         }
     },
     unauthorized: {
-        message: "Unauthorized",
+        message: 'Unauthorized',
         error: {
-            name: "Unauthorized",
+            name: 'Unauthorized',
             statusCode: 401,
             status: 401,
-            level: "error",
+            level: 'error',
             timestamp: new Date().toISOString()
         }
     },
     internal: {
-        message: "Internal server error",
+        message: 'Internal server error',
         error: {
-            name: "InternalServerError",
+            name: 'InternalServerError',
             statusCode: 500,
             status: 500,
-            level: "error",
+            level: 'error',
             timestamp: new Date().toISOString()
         }
     }

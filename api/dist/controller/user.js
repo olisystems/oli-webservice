@@ -76,6 +76,7 @@ function postUser(dbConnection, data) {
         postUser.password = yield bcrypt.hash(data.password, saltRounds);
         postUser.company = data.company;
         postUser.email = data.email;
+        postUser.isAdmin = data.isAdmin;
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let postUserData = yield userRepository.save(postUser);
@@ -103,6 +104,7 @@ function patchUser(dbConnection, data, pk) {
         patchUser[0].password = yield bcrypt.hash(data.password, saltRounds);
         patchUser[0].company = data.company;
         patchUser[0].email = data.email;
+        patchUser[0].isAdmin = data.isAdmin;
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let patchUserData = yield userRepository.save(patchUser);

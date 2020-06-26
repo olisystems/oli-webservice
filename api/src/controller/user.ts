@@ -86,6 +86,7 @@ export async function postUser(dbConnection: any, data: any) {
     postUser.password = await bcrypt.hash(data.password, saltRounds);
     postUser.company = data.company;
     postUser.email = data.email;
+    postUser.isAdmin = data.isAdmin;
 
     return new Promise (async (resolve) => {
 
@@ -121,6 +122,7 @@ export async function patchUser(dbConnection: any, data: any, pk: string) {
     patchUser[0].password = await bcrypt.hash(data.password, saltRounds);
     patchUser[0].company = data.company;
     patchUser[0].email = data.email;
+    patchUser[0].isAdmin = data.isAdmin;
 
     return new Promise (async (resolve) => {
 
