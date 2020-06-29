@@ -21,7 +21,7 @@ To start up the docker composition simply run the following command in the proje
 ```
 ./stack-start.sh
 ```
-**Note:** The ```stack-start.sh``` script needs to have executable permissions.
+**Note:** The [stack-start.sh](stack-start.sh) script needs to have executable permissions.
 
 The docker composition starts up the following containers:
 | Name | Image | Purpose |
@@ -208,7 +208,7 @@ Authentication is applied by a basic authentication in the request header.
 {
     "pk": "3e57e5c4-4a1e-4213-bac4-f78d3d794593",
     "name": "oli",
-    "password" "pass",
+    "password" "secure-password",
     "company": null,
     "createdAt": "2020-06-26T15:28:30.510Z",
     "email": null,
