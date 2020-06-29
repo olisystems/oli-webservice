@@ -1,5 +1,5 @@
 # Oli Webservice
-Oli Webservice provides a soap service implementation to receive post requests with smart meter data.
+Oli Webservice provides a [soap service implementation](resources/MeterDataCollectionOut.svc.wsdl) to receive post requests with smart meter data.
 
 ## Installation
 The service stack consists of three main components:
@@ -24,7 +24,7 @@ To start up the docker composition simply run the following command in the proje
 **Note:** The ```stack-start.sh``` script needs to have executable permissions.
 
 The docker composition starts up the following containers:
-| Name  | Image | Purpose |
+| Name | Image | Purpose |
 |---|---|---|
 | oli_webservice_postgres | Postgres:12 | Database |
 | oli_webservicegit_pgbackups | prodrigestivill/postgres-backup-local | Database backup service |
@@ -34,7 +34,7 @@ The docker composition starts up the following containers:
 #### Configuration
 ##### Dotenv
 The following configurations must be applied by setting environmet variables in a `.env` file in the project root directory according to the [.env.example file](./.env.example) in the project root directory. The following environmet varialbes must be set:
-| Name  | Description | Example | Note |
+| Name | Description | Example | Note |
 |---|---|---|---|
 | NODE_ENV | NodeJs application server environment | production |  |
 | SERVER_PORT | NodeJs server port | 8000 | Docker internal and expose |
@@ -102,4 +102,129 @@ insert into public.t_users (name, password, is_admin ) values ('normal-user', '$
 
 ## Usage
 
-## Integration tests
+The service is separated into a SOAP service and a rest API which are implementing the following endpoint structure:
+- `<host>/cb-emt-meterData/soap/v1/<resource>`
+- `<host>/cb-emt-meterData/rest/v1/<resource>`
+Authentication is applied by a basic authentication in the request header.
+
+### Meter data collection out
+
+| Method | Endpoint | Type | Parameter | Body | Auth Role | Response |
+|---|---|---|---|---|---|---|
+| GET | `<host>`/cb-emt-meterData/soap/v1/meterDataCollectionOut | REST |  |  | Admin | `200` meterData data structure (json) |
+| POST | `<host>`/cb-emt-meterData/soap/v1/meterDataCollectionOut | SOAP |  | meterData data structure (xml) | User | `201` meterData data structure (xml) |
+
+### Users
+
+| Method | Endpoint | Type | Parameter | Body | Auth Role | Response |
+|---|---|---|---|---|---|---|
+| GET | `<host>`/cb-emt-meterData/rest/v1/users | REST |  |  | Admin | `200` [] user data structure (json) |
+| GET | `<host>`/cb-emt-meterData/rest/v1/users/:pk | REST |  |  | Admin | `200` user data structure (json) |
+| POST | `<host>`/cb-emt-meterData/rest/v1/users | REST |  | user data structure (json) | Admin | `201` user data structure (json) |
+| PATCH | `<host>`/cb-emt-meterData/rest/v1/users/:pk | REST |  | user data structure (json) | Admin | `200` user data structure (json) |
+| DELETE | `<host>`/cb-emt-meterData/rest/v1/users/:pk | REST |  |  | Admin | `200` user data structure (json) |
+
+## Data structure
+
+### Meter data collection out
+
+#### XML
+[Meter data collection out: ](resources/datastructure-meter-data-collection-out.xml)
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<ns2:ForwardMeterData xmlns:ns2="http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection">
+    <MessageHeader>
+        <MessageId systemName="RSS">d072a097-8fff-48e0-b3a9-64411ab3c53b</MessageId>
+        <TimeSent>2020-06-26T14:15:49.933+02:00</TimeSent>
+        <InstanceId>MDCS_001</InstanceId>
+        <TenantId>1000</TenantId>
+        <MeterOperatorId>9903916000000</MeterOperatorId>
+        <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>
+        <RoutingKeyServiceBus>WIRCON</RoutingKeyServiceBus>
+    </MessageHeader>
+    <SmgwId>EDNT0018068446</SmgwId>
+    <LogicalDeviceId>1FRO0700023971</LogicalDeviceId>
+    <Measurement>
+        <OBIS>1-0:1.8.0*255</OBIS>
+        <CapturePeriod>15m</CapturePeriod>
+        <Entry>
+            <Timestamp>2020-06-26T14:15:00+02:00</Timestamp>
+            <Value>978777</Value>
+            <Scaler>-1</Scaler>
+            <Unit>Wh</Unit>
+            <Status>1</Status>
+        </Entry>
+    </Measurement>
+    <RawData>3C3F786D6C2076...</RawData>
+</ns2:ForwardMeterData>
+```
+
+#### Mandatory fields:
+- TimeSent
+- InstanceId
+- TenantId
+- MeterOperatorId
+- Entry:Timestamp
+- Entry:Value
+
+#### JSON
+```json
+{
+    "pk": "9cbf4f8a-f78a-4f21-bd4b-a8639e830a83",
+    "smgwId": "EDNT0018068446",
+    "logicalDeviceId": "1FRO0700023971",
+    "rawData": "3C3F786D6C2076...",
+    "messageId": "RSS",
+    "correlationId": null,
+    "timeSent": "2020-06-26T14:15:49.933+02:00",
+    "instanceId": "MDCS_001",
+    "tenantId": "1000",
+    "meterOperatorId": "9903916000000",
+    "externalMarketParticipantId": "9903916000000",
+    "routingKeyServiceBus": "WIRCON",
+    "routingKeyExtern": null,
+    "obis": "1-0:1.8.0*255",
+    "capturePeriod": "15m",
+    "entryTimestamp": "2020-06-26T14:15:00+02:00",
+    "entryValue": "978777",
+    "entryScaler": -1,
+    "entryUnit": "Wh",
+    "entryStatus": "1"
+}
+```
+
+#### Mandatory fields:
+- timeSent
+- instanceId
+- tenantId
+- meterOperatorId
+- entryTimestamp
+- entryValue
+
+### User
+
+#### JSON
+```json
+{
+    "pk": "3e57e5c4-4a1e-4213-bac4-f78d3d794593",
+    "name": "oli",
+    "password" "pass",
+    "company": null,
+    "createdAt": "2020-06-26T15:28:30.510Z",
+    "email": null,
+    "isAdmin": true
+}
+```
+
+#### Mandatory fields:
+- name
+- password
+
+## Tests
+
+Tests and example usage scenarios can be performed by the postman collection under [resources/oli-webservice.postman_collection.json](resources/oli-webservice.postman_collection.json). To use the postman collection an environment must be created which contains the following variables:
+- apiUrl
+- adminUser
+- adminPassword
+- user
+- password

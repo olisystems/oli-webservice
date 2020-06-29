@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "30312332-9aab-4286-8b0f-bdf679285235",
+		"name": "oli-webservice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "meter-data-soap",
+			"item": [
+				{
+					"name": "postMeterData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "400d8524-57cf-4a8c-95a1-d07a7ca3d0a9",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "text/xml; charset=utf-8",
+								"type": "text"
+							},
+							{
+								"key": "SOAPAction",
+								"value": "http://sap.com/xi/WebService/soap1.1",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<ns2:ForwardMeterData xmlns:ns2=\"http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection\">\n    <MessageHeader>\n        <MessageId systemName=\"RSS\">d072a097-8fff-48e0-b3a9-64411ab3c53b</MessageId>\n        <TimeSent>2020-06-26T14:15:49.933+02:00</TimeSent>\n        <InstanceId>MDCS_001</InstanceId>\n        <TenantId>1000</TenantId>\n        <MeterOperatorId>9903916000000</MeterOperatorId>\n        <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>\n        <RoutingKeyServiceBus>WIRCON</RoutingKeyServiceBus>\n    </MessageHeader>\n    <SmgwId>EDNT0018068446</SmgwId>\n    <LogicalDeviceId>1FRO0700023971</LogicalDeviceId>\n    <Measurement>\n        <OBIS>1-0:1.8.0*255</OBIS>\n        <CapturePeriod>15m</CapturePeriod>\n        <Entry>\n            <Timestamp>2020-06-26T14:15:00+02:00</Timestamp>\n            <Value>978777</Value>\n            <Scaler>-1</Scaler>\n            <Unit>Wh</Unit>\n            <Status>1</Status>\n        </Entry>\n    </Measurement>\n    <RawData>3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554462D38223F3E0A3C656E76656C6F70652D656D742D6F757420786D6C6E733D2275726E3A736368656D612D736D67773A6867702D332D30223E3C6D6561737572656D656E742D6C697374207265763D2234223E3C6576702D69643E3146524F303730303032333937313C2F6576702D69643E3C736F757263653E41544C3C2F736F757263653E3C6D65746572696E672D706F696E742D69643E4445303030303030303030303030303030303030303030303030303030303030313C2F6D65746572696E672D706F696E742D69643E3C737570706C6965723E4E65747A6542572E454D542E47543C2F737570706C6965723E3C636170747572653E3930303C2F636170747572653E3C7461663E7461662D373C2F7461663E3C6D6561737572656D656E742D7265636F7264207265763D2233223E3C6964783E3131323C2F6964783E3C7374617475733E3C6D657465723E313836353938383C2F6D657465723E3C736D67773E3C2F736D67773E3C7074623E303C2F7074623E3C2F7374617475733E3C7369676E61747572653E4D45514349485A6D772F5A7746624852677A6535457A706E34435655414235322F647852553232666449466D6E697358416941542F666F633947713237766762714954462B6E5A3356567357614272545763414361616F6A6F6A75516E413D3D3C2F7369676E61747572653E3C7265636F7264696E672D74696D653E323032302D30362D32365431343A31353A30302B30323A30303C2F7265636F7264696E672D74696D653E3C7461726765742D74696D653E323032302D30362D32365431343A31353A30302B30323A30303C2F7461726765742D74696D653E3C6D6561737572656D656E742D656E747279207265763D2231223E3C6F6269732D69643E3C646563696D616C3E312D303A312E382E302A3235353C2F646563696D616C3E3C2F6F6269732D69643E3C76616C75653E3937383737373C2F76616C75653E3C7363616C65723E2D313C2F7363616C65723E3C756E69743E57683C2F756E69743E3C6D6561737572656D656E742D74696D653E313937302D30312D31375430383A35383A32322B30313A30303C2F6D6561737572656D656E742D74696D653E3C2F6D6561737572656D656E742D656E7472793E3C2F6D6561737572656D656E742D7265636F72643E3C2F6D6561737572656D656E742D6C6973743E3C2F656E76656C6F70652D656D742D6F75743E0A</RawData>\n</ns2:ForwardMeterData>",
+							"options": {
+								"raw": {
+									"language": "xml"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/soap/v1/meterDataCollectionOut",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"soap",
+								"v1",
+								"meterDataCollectionOut"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "user-rest",
+			"item": [
+				{
+					"name": "postUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"2 another new client\",\n    \"password\": \"new-password\",\n    \"isAdmin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/users",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"rest",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/users",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"rest",
+								"v1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserByPk",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/users/c6315eef-bafe-468b-b531-c22a2ab63f28",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"rest",
+								"v1",
+								"users",
+								"c6315eef-bafe-468b-b531-c22a2ab63f28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patchUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"updated-password\",\n    \"isAdmin\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/users/87d504ed-1e43-4d55-82ff-4cc131bb9100",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"rest",
+								"v1",
+								"users",
+								"87d504ed-1e43-4d55-82ff-4cc131bb9100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/users/43c54c27-7143-496a-a054-3def807db0bb",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"rest",
+								"v1",
+								"users",
+								"43c54c27-7143-496a-a054-3def807db0bb"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "meter-data-rest",
+			"item": [
+				{
+					"name": "getMeterData",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{adminPassword}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{adminUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/meterDataCollectionOut",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"cb-emt-meterData",
+								"rest",
+								"v1",
+								"meterDataCollectionOut"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
