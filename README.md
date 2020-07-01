@@ -131,32 +131,35 @@ Authentication is applied by a basic authentication in the request header.
 #### XML
 [Meter data collection out: ](resources/datastructure-meter-data-collection-out.xml)
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<ns2:ForwardMeterData xmlns:ns2="http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection">
-    <MessageHeader>
-        <MessageId systemName="RSS">d072a097-8fff-48e0-b3a9-64411ab3c53b</MessageId>
-        <TimeSent>2020-06-26T14:15:49.933+02:00</TimeSent>
-        <InstanceId>MDCS_001</InstanceId>
-        <TenantId>1000</TenantId>
-        <MeterOperatorId>9903916000000</MeterOperatorId>
-        <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>
-        <RoutingKeyServiceBus>WIRCON</RoutingKeyServiceBus>
-    </MessageHeader>
-    <SmgwId>EDNT0018068446</SmgwId>
-    <LogicalDeviceId>1FRO0700023971</LogicalDeviceId>
-    <Measurement>
-        <OBIS>1-0:1.8.0*255</OBIS>
-        <CapturePeriod>15m</CapturePeriod>
-        <Entry>
-            <Timestamp>2020-06-26T14:15:00+02:00</Timestamp>
-            <Value>978777</Value>
-            <Scaler>-1</Scaler>
-            <Unit>Wh</Unit>
-            <Status>1</Status>
-        </Entry>
-    </Measurement>
-    <RawData>3C3F786D6C2076...</RawData>
-</ns2:ForwardMeterData>
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/" >
+    <SOAP:Header />
+    <SOAP:Body xmlns:urn1="urn:schema-smgwa:mdtrans-2-0" xmlns:urn="urn:master-data-transfer-result" >
+        <ns2:ForwardMeterData xmlns:ns2="http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection">
+            <MessageHeader>
+                <MessageId systemName="">9b15aee7d44f4284931b759fd904bfc6</MessageId>
+                <CorrelationId>052ae77ac15b491fa1d3cd5186df9004</CorrelationId>
+                <TimeSent>2019-10-18T09:46:41Z</TimeSent>
+                <InstanceId>GWAS_001</InstanceId>
+                <TenantId>1000</TenantId>
+                <MeterOperatorId>9903916000000</MeterOperatorId>
+                <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>
+            </MessageHeader>
+            <SmgwId>ETST2000230012</SmgwId>
+            <LogicalDeviceId>1FROCE00022136</LogicalDeviceId>
+            <Measurement>
+                <OBIS>1-0:1.8.0</OBIS>
+                <CapturePeriod>1M</CapturePeriod>
+                <Entry>
+                    <Timestamp>2020-06-16T13:30:36Z</Timestamp>
+                    <Value>20000</Value>
+                    <Scaler>-1</Scaler>
+                    <Unit>Wh</Unit>
+                    <Status>1</Status>
+                </Entry>
+            </Measurement>
+        </ns2:ForwardMeterData>
+    </SOAP:Body>
+</SOAP:Envelope>
 ```
 
 #### Mandatory fields:

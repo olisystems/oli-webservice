@@ -1,27 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<ns2:ForwardMeterData xmlns:ns2="http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection">
-    <MessageHeader>
-        <MessageId systemName="RSS">8a7224fc-45e3-45d9-8f9d-a4a04a0f86db</MessageId>
-        <TimeSent>2020-06-25T11:00:47.155+02:00</TimeSent>
-        <InstanceId>MDCS_001</InstanceId>
-        <TenantId>1000</TenantId>
-        <MeterOperatorId>9903916000000</MeterOperatorId>
-        <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>
-        <RoutingKeyServiceBus>WIRCON</RoutingKeyServiceBus>
-    </MessageHeader>
-    <SmgwId>EDNT0020035231</SmgwId>
-    <LogicalDeviceId>1FRO0700018754</LogicalDeviceId>
-    <Measurement>
-        <OBIS>1-0:1.8.0*255</OBIS>
-        <CapturePeriod>15m</CapturePeriod>
-        <Entry>
-            <Timestamp>2020-06-25T11:00:00+02:00</Timestamp>
-            <Value>19001</Value>
-            <Scaler>-1</Scaler>
-            <Unit>Wh</Unit>
-            <Status>1</Status>
-        </Entry>
-    </Measurement>
-    <RawData>...5743E0A</RawData>
-</ns2:ForwardMeterData>
+<SOAP:Envelope xmlns:SOAP="http://schemas.xmlsoap.org/soap/envelope/" >
+    <SOAP:Header />
+    <SOAP:Body xmlns:urn1="urn:schema-smgwa:mdtrans-2-0" xmlns:urn="urn:master-data-transfer-result" >
+        <ns2:ForwardMeterData xmlns:ns2="http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection">
+            <MessageHeader>
+                <MessageId systemName="">9b15aee7d44f4284931b759fd904bfc6</MessageId>
+                <CorrelationId>052ae77ac15b491fa1d3cd5186df9004</CorrelationId>
+                <TimeSent>2019-10-18T09:46:41Z</TimeSent>
+                <InstanceId>GWAS_001</InstanceId>
+                <TenantId>1000</TenantId>
+                <MeterOperatorId>9903916000000</MeterOperatorId>
+                <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>
+            </MessageHeader>
+            <SmgwId>ETST2000230012</SmgwId>
+            <LogicalDeviceId>1FROCE00022136</LogicalDeviceId>
+            <Measurement>
+                <OBIS>1-0:1.8.0</OBIS>
+                <CapturePeriod>1M</CapturePeriod>
+                <Entry>
+                    <Timestamp>2020-06-16T13:30:36Z</Timestamp>
+                    <Value>20000</Value>
+                    <Scaler>-1</Scaler>
+                    <Unit>Wh</Unit>
+                    <Status>1</Status>
+                </Entry>
+            </Measurement>
+        </ns2:ForwardMeterData>
+    </SOAP:Body>
+</SOAP:Envelope>

@@ -44,7 +44,9 @@ function postMeterData(dbConnection, data) {
                     });
                 }
                 else {
-                    forwardMeterData = getObjectByName(jsonData.elements, 'ns2:ForwardMeterData')[0].elements;
+                    jsonData = getObjectByName(jsonData.elements, 'SOAP:Envelope')[0].elements;
+                    jsonData = getObjectByName(jsonData, 'SOAP:Body')[0].elements;
+                    forwardMeterData = getObjectByName(jsonData, 'ns2:ForwardMeterData')[0].elements;
                 }
                 meterData = {};
                 messageHeader = constructMessageHeader(getObjectByName(forwardMeterData, 'MessageHeader')[0].elements);
@@ -161,11 +163,23 @@ function validateRequestBody(body) {
     let messageHeader;
     let measurement;
     let entry;
-    if (getObjectByName(body.elements, 'ns2:ForwardMeterData').length === 0) {
+    if (getObjectByName(body.elements, 'SOAP:Envelope').length === 0) {
+        return { name: 'Missing field', field: 'SOAP:Envelope' };
+    }
+    else {
+        body = getObjectByName(body.elements, 'SOAP:Envelope')[0].elements;
+    }
+    if (getObjectByName(body, 'SOAP:Body').length === 0) {
+        return { name: 'Missing field', field: 'SOAP:Body' };
+    }
+    else {
+        body = getObjectByName(body, 'SOAP:Body')[0].elements;
+    }
+    if (getObjectByName(body, 'ns2:ForwardMeterData').length === 0) {
         return { name: 'Missing field', field: 'ns2:ForwardMeterData' };
     }
     else {
-        forwardMeterData = getObjectByName(body.elements, 'ns2:ForwardMeterData')[0].elements;
+        forwardMeterData = getObjectByName(body, 'ns2:ForwardMeterData')[0].elements;
     }
     if (getObjectByName(forwardMeterData, 'SmgwId').length === 0) {
         return { name: 'Missing field', field: 'SmgwId' };
@@ -204,7 +218,7 @@ function validateRequestBody(body) {
         return { name: 'Missing field', field: 'Timestamp' };
     }
     if (getObjectByName(entry, 'Value').length === 0) {
-        return { name: 'Missing field', field: 'Timestamp' };
+        return { name: 'Missing field', field: 'Value' };
     }
     return undefined;
 }
