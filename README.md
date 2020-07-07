@@ -21,7 +21,7 @@ To start up the docker composition simply run the following command in the proje
 ```
 ./stack-start.sh
 ```
-**Note:** The [stack-start.sh](stack-start.sh) script needs to have executable permissions.
+The script sets the ```.env``` file as a source and composes up the docker composition.
 
 The docker composition starts up the following containers:
 | Name | Image | Purpose |
@@ -30,6 +30,15 @@ The docker composition starts up the following containers:
 | oli_webservicegit_pgbackups | prodrigestivill/postgres-backup-local | Database backup service |
 | oli_webservice_api | node:14 | Application Server |
 | oli_webservice_nginx | nginx:latest | Reverse proxy |
+
+#### Stop the docker composition
+To stop the docker composition simply run the following command in the project root directory:
+```
+./stack-stop.sh
+```
+The script backs up the postgres soap_service database and composes down the docker composition.
+
+**Note:** The [stack-start.sh](stack-start.sh) and [stack-stop.sh](stack-stop.sh) script needs to have executable permissions.
 
 #### Configuration
 ##### Dotenv
@@ -76,6 +85,18 @@ insert into public.t_users (name, password, is_admin ) values ('normal-user', '$
 ```
 **Note:** Due to security reasons, the passwords for all initial created users should be changed through the user API (described in API section) after the Service was started.
 
+#### Backups
+The database is backed up daily by the container ```pgbackups```. The backup frequency and other backup configurations can be done by setting the corresponding environment variables of the  ```pgbackups``` service in [docker-compose.yml](docker-compose.yml)
+For more information see: [https://hub.docker.com/r/prodrigestivill/postgres-backup-local](https://hub.docker.com/r/prodrigestivill/postgres-backup-local).
+
+The backups made by the container ```pgbackups``` are stored under:
+- db/backups/daily
+- db/backups/weekly
+- db/backups/monthly
+
+The backups made by the script [stack-stop.sh](stack-stop.sh) are stored under:
+- db/backups/single
+
 ### Single Services
 For development purposes or any other reasons, the service can be started, by installing the technologies of the single stack components on the host machine or a local computer and start them.
 
@@ -111,7 +132,7 @@ Authentication is applied by a basic authentication in the request header.
 
 | Method | Endpoint | Type | Parameter | Body | Auth Role | Response |
 |---|---|---|---|---|---|---|
-| GET | `<host>`/cb-emt-meterData/soap/v1/meterDataCollectionOut | REST |  |  | Admin | `200` meterData data structure (json) |
+| GET | `<host>`/cb-emt-meterData/rest/v1/meterDataCollectionOut | REST |  |  | Admin | `200` meterData data structure (json) |
 | POST | `<host>`/cb-emt-meterData/soap/v1/meterDataCollectionOut | SOAP |  | meterData data structure (xml) | User | `201` meterData data structure (xml) |
 
 ### Users
