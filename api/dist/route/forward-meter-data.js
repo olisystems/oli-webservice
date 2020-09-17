@@ -20,7 +20,7 @@ exports.meterDataRouter.get('/', function (req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         let isAuthorized = yield auth_1.isAuthorizedAdmin(app_1.dbConnection, req.headers);
         if (isAuthorized) {
-            let getMeterDataRes = yield controller_1.getMeterData(app_1.dbConnection);
+            let getMeterDataRes = yield controller_1.getMeterData(app_1.dbConnection, req);
             res.status(getMeterDataRes.status).send(getMeterDataRes.data);
         }
         else {

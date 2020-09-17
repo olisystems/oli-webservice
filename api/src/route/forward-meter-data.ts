@@ -13,7 +13,7 @@ meterDataRouter.get('/', async function (req: Request, res: Response) {
 
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);
     if (isAuthorized) {
-        let getMeterDataRes: any = await getMeterData(dbConnection);
+        let getMeterDataRes: any = await getMeterData(dbConnection, req);
         res.status(getMeterDataRes.status).send(getMeterDataRes.data);
     } else {
         res.status(401).send(errorResponses.unauthorized);

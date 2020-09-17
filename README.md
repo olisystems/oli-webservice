@@ -132,7 +132,7 @@ Authentication is applied by a basic authentication in the request header.
 
 | Method | Endpoint | Type | Parameter | Body | Auth Role | Response |
 |---|---|---|---|---|---|---|
-| GET | `<host>`/cb-emt-meterData/rest/v1/meterDataCollectionOut | REST |  |  | Admin | `200` meterData data structure (json) |
+| GET | `<host>`/cb-emt-meterData/rest/v1/meterDataCollectionOut | REST | <ul><li>smgwId (optional)</li><li>startDate (optional)</li><li>endDate (optional)</li></ul> |  | Admin | `200` meterData data structure (json) |
 | POST | `<host>`/cb-emt-meterData/soap/v1/meterDataCollectionOut | SOAP |  | meterData data structure (xml) | User | `201` meterData data structure (xml) |
 
 ### Users

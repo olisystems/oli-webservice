@@ -10,18 +10,36 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getMeterData = void 0;
+const typeorm_1 = require("typeorm");
 const logger_1 = require("../logger");
 const entity_1 = require("../entity");
-function getMeterData(dbConnection) {
+function getMeterData(dbConnection, req) {
     return __awaiter(this, void 0, void 0, function* () {
         let meterdDataRepository = dbConnection.getRepository(entity_1.MeterDataSet);
+        let whereClause = {};
+        if (req.query.smgwId) {
+            console.log('in smgwId');
+            whereClause.smgwId = req.query.smgwId;
+        }
+        if (req.query.startDate && req.query.endDate) {
+            console.log('in Between');
+            whereClause.entryTimestamp = typeorm_1.Between(req.query.startDate, req.query.endDate);
+        }
+        if (req.query.startDate && !req.query.endDate) {
+            console.log('in Start');
+            whereClause.entryTimestamp = typeorm_1.MoreThan(req.query.startDate);
+        }
+        if (!req.query.startDate && req.query.endDate) {
+            console.log('in End');
+            whereClause.entryTimestamp = typeorm_1.LessThan(req.query.endDate);
+        }
         return new Promise((resolve) => __awaiter(this, void 0, void 0, function* () {
             try {
                 let getMeterData = yield meterdDataRepository.find({
                     order: {
                         timeSent: "DESC"
                     },
-                    limit: 30
+                    where: whereClause,
                 });
                 resolve({
                     status: 200,

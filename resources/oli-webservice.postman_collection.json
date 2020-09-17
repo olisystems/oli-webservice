@@ -27,13 +27,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "password",
-									"value": "{{adminPassword}}",
+									"key": "username",
+									"value": "{{user}}",
 									"type": "string"
 								},
 								{
-									"key": "username",
-									"value": "{{adminUser}}",
+									"key": "password",
+									"value": "{{password}}",
 									"type": "string"
 								}
 							]
@@ -53,7 +53,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<ns2:ForwardMeterData xmlns:ns2=\"http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection\">\n    <MessageHeader>\n        <MessageId systemName=\"RSS\">d072a097-8fff-48e0-b3a9-64411ab3c53b</MessageId>\n        <TimeSent>2020-06-26T14:15:49.933+02:00</TimeSent>\n        <InstanceId>MDCS_001</InstanceId>\n        <TenantId>1000</TenantId>\n        <MeterOperatorId>9903916000000</MeterOperatorId>\n        <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>\n        <RoutingKeyServiceBus>WIRCON</RoutingKeyServiceBus>\n    </MessageHeader>\n    <SmgwId>EDNT0018068446</SmgwId>\n    <LogicalDeviceId>1FRO0700023971</LogicalDeviceId>\n    <Measurement>\n        <OBIS>1-0:1.8.0*255</OBIS>\n        <CapturePeriod>15m</CapturePeriod>\n        <Entry>\n            <Timestamp>2020-06-26T14:15:00+02:00</Timestamp>\n            <Value>978777</Value>\n            <Scaler>-1</Scaler>\n            <Unit>Wh</Unit>\n            <Status>1</Status>\n        </Entry>\n    </Measurement>\n    <RawData>3C3F786D6C2076657273696F6E3D22312E302220656E636F64696E673D225554462D38223F3E0A3C656E76656C6F70652D656D742D6F757420786D6C6E733D2275726E3A736368656D612D736D67773A6867702D332D30223E3C6D6561737572656D656E742D6C697374207265763D2234223E3C6576702D69643E3146524F303730303032333937313C2F6576702D69643E3C736F757263653E41544C3C2F736F757263653E3C6D65746572696E672D706F696E742D69643E4445303030303030303030303030303030303030303030303030303030303030313C2F6D65746572696E672D706F696E742D69643E3C737570706C6965723E4E65747A6542572E454D542E47543C2F737570706C6965723E3C636170747572653E3930303C2F636170747572653E3C7461663E7461662D373C2F7461663E3C6D6561737572656D656E742D7265636F7264207265763D2233223E3C6964783E3131323C2F6964783E3C7374617475733E3C6D657465723E313836353938383C2F6D657465723E3C736D67773E3C2F736D67773E3C7074623E303C2F7074623E3C2F7374617475733E3C7369676E61747572653E4D45514349485A6D772F5A7746624852677A6535457A706E34435655414235322F647852553232666449466D6E697358416941542F666F633947713237766762714954462B6E5A3356567357614272545763414361616F6A6F6A75516E413D3D3C2F7369676E61747572653E3C7265636F7264696E672D74696D653E323032302D30362D32365431343A31353A30302B30323A30303C2F7265636F7264696E672D74696D653E3C7461726765742D74696D653E323032302D30362D32365431343A31353A30302B30323A30303C2F7461726765742D74696D653E3C6D6561737572656D656E742D656E747279207265763D2231223E3C6F6269732D69643E3C646563696D616C3E312D303A312E382E302A3235353C2F646563696D616C3E3C2F6F6269732D69643E3C76616C75653E3937383737373C2F76616C75653E3C7363616C65723E2D313C2F7363616C65723E3C756E69743E57683C2F756E69743E3C6D6561737572656D656E742D74696D653E313937302D30312D31375430383A35383A32322B30313A30303C2F6D6561737572656D656E742D74696D653E3C2F6D6561737572656D656E742D656E7472793E3C2F6D6561737572656D656E742D7265636F72643E3C2F6D6561737572656D656E742D6C6973743E3C2F656E76656C6F70652D656D742D6F75743E0A</RawData>\n</ns2:ForwardMeterData>",
+							"raw": "<SOAP:Envelope xmlns:SOAP=\"http://schemas.xmlsoap.org/soap/envelope/\" >\n    <SOAP:Header />\n    <SOAP:Body xmlns:urn1=\"urn:schema-smgwa:mdtrans-2-0\" xmlns:urn=\"urn:master-data-transfer-result\" >\n        <ns2:ForwardMeterData xmlns:ns2=\"http://enbw.com/esr/SAPPO/Netze/Messsysteme/MeterDataCollection\">\n            <MessageHeader>\n                <MessageId systemName=\"\">9b15aee7d44f4284931b759fd904bfc6</MessageId>\n                <CorrelationId>052ae77ac15b491fa1d3cd5186df9004</CorrelationId>\n                <TimeSent>2019-10-18T09:46:41Z</TimeSent>\n                <InstanceId>GWAS_001</InstanceId>\n                <TenantId>1000</TenantId>\n                <MeterOperatorId>9903916000000</MeterOperatorId>\n                <ExternalMarketParticipantId>9903916000000</ExternalMarketParticipantId>\n            </MessageHeader>\n            <SmgwId>ETST2000230012</SmgwId>\n            <LogicalDeviceId>1FROCE00022136</LogicalDeviceId>\n            <Measurement>\n                <OBIS>1-0:1.8.0</OBIS>\n                <CapturePeriod>1M</CapturePeriod>\n                <Entry>\n                    <Timestamp>2020-06-16T13:30:36Z</Timestamp>\n                    <Value>20000</Value>\n                    <Scaler>-1</Scaler>\n                    <Unit>Wh</Unit>\n                    <Status>1</Status>\n                </Entry>\n            </Measurement>\n        </ns2:ForwardMeterData>\n    </SOAP:Body>\n</SOAP:Envelope>",
 							"options": {
 								"raw": {
 									"language": "xml"
@@ -334,7 +334,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/meterDataCollectionOut",
+							"raw": "{{apiUrl}}/cb-emt-meterData/rest/v1/meterDataCollectionOut?smgwId=EDNT0018068443&startDate=2020-09-12T23:00:44.307+02:00&endDate=2020-09-16T07:00:00+02:00",
 							"host": [
 								"{{apiUrl}}"
 							],
@@ -343,6 +343,20 @@
 								"rest",
 								"v1",
 								"meterDataCollectionOut"
+							],
+							"query": [
+								{
+									"key": "smgwId",
+									"value": "EDNT0018068443"
+								},
+								{
+									"key": "startDate",
+									"value": "2020-09-12T23:00:44.307+02:00"
+								},
+								{
+									"key": "endDate",
+									"value": "2020-09-16T07:00:00+02:00"
+								}
 							]
 						}
 					},

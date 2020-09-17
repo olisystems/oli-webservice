@@ -1,8 +1,16 @@
 
+-- Database connection
+-- ----------------------------------------------------
+
+\connect soap_service
+
+
+
 -- Extensions
 -- ----------------------------------------------------
 
 create extension if not exists "uuid-ossp";
+
 
 
 -- Tables and views
