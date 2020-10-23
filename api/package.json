@@ -16,6 +16,7 @@
   "author": "Giuliano Baumann",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^14.14.2",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.9.3"
   },
@@ -36,6 +37,7 @@
     "express-session": "^1.17.1",
     "keycloak-connect": "^10.0.1",
     "morgan": "^1.10.0",
+    "mqtt": "^4.2.1",
     "nodejs-base64-encode": "^1.1.0",
     "pg": "^8.2.1",
     "reflect-metadata": "^0.1.13",

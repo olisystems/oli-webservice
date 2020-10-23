@@ -1,5 +1,7 @@
-
-export const config = {
+"use strict";
+exports.__esModule = true;
+exports.config = void 0;
+exports.config = {
     db: {
         connection: {
             type: 'postgres',
@@ -16,9 +18,9 @@ export const config = {
             logging: false
         },
         retries: 10,
-        retryTimeout: 5000   // 5000 milli seconds
+        retryTimeout: 5000 // 5000 milli seconds
     },
-    xmlOptions: {compact: true, ignoreComment: true, spaces: 4},
+    xmlOptions: { compact: true, ignoreComment: true, spaces: 4 },
     mqtt: {
         connection: {
             url: "unbelievable-politician.cloudmqtt.com",
@@ -27,4 +29,4 @@ export const config = {
             password: "zEb0WyhKguIn"
         }
     }
-}
+};

@@ -93,8 +93,8 @@ export async function postMeterData(dbConnection: any, data: any) {
 
         // Save measurement
         try {
-            
             postMeasurement = await measurementRepository.save(measurement);
+
         } catch (error) {
             
             logger.error(error);
@@ -121,6 +121,23 @@ export async function postMeterData(dbConnection: any, data: any) {
                 status: 500,
                 error: errorResponses.internal
             })
+        }
+
+        try{
+            // zuweisung von smgq id zu topic bzw.
+            // map mit https://olisharenergy.atlassian.net/wiki/spaces/OD/pages/1667170305/OLI+Fleet
+            // auf DB gehen, zählerstand rausholen und mit aktuellem verrechnen
+            // {"value": , "timestamp": }
+            // difference: value_t2*10**scaler_t2 - value_t1 * 10**scaler_t1
+            sendMeasurementToMQTTBroker(meterData, measurement)
+        }
+        catch(error){
+            logger.console.error(error);
+            resolve({
+                status: 500
+                error. errorResponses.internal
+            })
+            
         }
 
         logger.verbose("forward meterdata successfully performed");

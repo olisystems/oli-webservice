@@ -30,7 +30,7 @@ const startApp = async () => {
         logger.info('service is running in develop mode');
     }
 
-    // Connact to database
+    // Connect to database
     dbConnection = await connectDb();
     if (dbConnection) {
 
