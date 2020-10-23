@@ -4,7 +4,6 @@ import bodyParser = require('body-parser');
 import { Request, Response } from 'express';
 import { postMeterData } from '../controller';
 import { dbConnection } from '../app';
-import {}
 import {} from '../app'
 import { isAuthorizedUser } from '../auth';
 import { errorResponses } from '../assets';
