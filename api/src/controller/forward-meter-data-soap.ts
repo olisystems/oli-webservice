@@ -3,6 +3,7 @@ import { MessageHeader, Measurement, MeterData } from '../entity';
 import { IMessageHeader, IMeasurement, IMeterData } from '../model';
 import { logger } from '../logger';
 import { errorResponses } from '../assets';
+import { handleSMGWData } from './mqtt-handler';
 const convert = require('xml-js');
 
 
@@ -129,15 +130,21 @@ export async function postMeterData(dbConnection: any, data: any) {
             // auf DB gehen, zählerstand rausholen und mit aktuellem verrechnen
             // {"value": , "timestamp": }
             // difference: value_t2*10**scaler_t2 - value_t1 * 10**scaler_t1
-            sendMeasurementToMQTTBroker(meterData, measurement)
-        }
-        catch(error){
-            logger.console.error(error);
-            resolve({
-                status: 500
-                error. errorResponses.internal
-            })
             
+            //let lastMeterData = meterDataRepository.);
+            //let lastMeasurementData = measurementRepository.get();
+
+
+            //let measurementRepository = dbConnection.getRepository(Measurement);
+            //let meterDataRepository = dbConnection.getRepository(MeterData);
+            
+            
+        } catch(error) {
+            logger.error(error);
+            resolve({
+                status: 500,
+                error: errorResponses.internal
+            })
         }
 
         logger.verbose("forward meterdata successfully performed");
@@ -148,6 +155,7 @@ export async function postMeterData(dbConnection: any, data: any) {
 
     })
 }
+
 
 
 /**

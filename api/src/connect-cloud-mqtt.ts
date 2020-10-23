@@ -11,12 +11,9 @@ var clientOptions:IClientOptions = {
     password: connectionConfig.password
 }
 
+export const mqttClient = connect(clientOptions);
 
-const client = connect(clientOptions);
+//client.publish('/hier/ist/mauro', JSON.stringify({"lol": "rofl"}));
 
-client.publish('/hier/ist/mauro', JSON.stringify({"lol": "rofl"}));
+//console.log('after publish')
 
-export function rofl(){
-    var bla:string = 'lol';
-    console.log(bla);
-}
