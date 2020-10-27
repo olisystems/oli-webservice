@@ -4,28 +4,28 @@ import {Entity, Column, PrimaryColumn} from 'typeorm';
 @Entity({name: 'public.v_measurement'})
 export class Measurement {
 
-    @PrimaryColumn()
+    @PrimaryColumn("text")
     pk?: string;
 
-    @Column()
+    @Column("text")
     obis?: string;
 
-    @Column()
+    @Column("text")
     capturePeriod?: string;
 
-    @Column()
+    @Column("text")
     entryTimestamp?: string;
 
-    @Column()
+    @Column("text")
     entryValue?: string;
 
-    @Column()
+    @Column("integer")
     entryScaler?: number;
 
-    @Column()
+    @Column("text")
     entryUnit?: string;
 
-    @Column()
+    @Column("text")
     entryStatus?: string;
 
 }

@@ -4,25 +4,25 @@ import {Entity, Column, PrimaryColumn} from 'typeorm';
 @Entity({name: 'public.v_users'})
 export class User {
 
-    @PrimaryColumn()
+    @PrimaryColumn("text")
     pk?: string;
 
-    @Column()
+    @Column("text")
     name?: string;
 
-    @Column()
+    @Column("text")
     password?: string;
 
-    @Column()
+    @Column("text")
     company?: string;
 
-    @Column()
+    @Column("integer")
     createdAt?: number;
 
-    @Column()
+    @Column("text")
     email?: string;
 
-    @Column()
+    @Column("boolean")
     isAdmin?: boolean;
 
 }

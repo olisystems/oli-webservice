@@ -4,34 +4,34 @@ import {Entity, Column, PrimaryColumn} from 'typeorm';
 @Entity({name: 'public.v_message_header'})
 export class MessageHeader {
 
-    @PrimaryColumn()
+    @PrimaryColumn("text")
     pk?: string;
 
-    @Column()
+    @Column("text")
     messageId?: string;
 
-    @Column()
+    @Column("text")
     correlationId?: string;
 
-    @Column()
+    @Column("text")
     timeSent?: string;
 
-    @Column()
+    @Column("integer")
     instanceId?: number;
 
-    @Column()
+    @Column("text")
     tenantId?: string;
 
-    @Column()
+    @Column("text")
     meterOperatorId?: string;
 
-    @Column()
+    @Column("text")
     externalMarketParticipantId?: string;
 
-    @Column()
+    @Column("text")
     routingKeyServiceBus?: string;
 
-    @Column()
+    @Column("text")
     routingKeyExtern?: string;
 
 }
