@@ -1,10 +1,18 @@
+import { resolve } from 'path';
 import 'reflect-metadata';
 import {createConnection} from "typeorm";
 import { MeterDataSet } from '../entity/meter-data-set'
+import { Measurement, MeterData } from '../entity';
+import { handleSMGWData } from '../controller/mqtt-handler';
 
 
-const smgwIdString : string = "EDNT0018068443"
-var dbConnection: any;
+const smgwId : string = "EDNT0018068443"
+var oldestEntry: any
+var currentMeasurementValue: Measurement = {
+    entryTimestamp: "123",
+    entryScaler: 1,
+    entryValue: "789"
+}
 
 createConnection({
     type: "postgres",
@@ -16,16 +24,26 @@ createConnection({
     entities: [
         "../entity/*.js"
     ],
-    //synchronize: true,
-    logging: true
-}).then(connection => {
-    
-    let meterView = connection.getRepository(MeterDataSet);
-    var oldestEntry: any = meterView.findOne({
-        where : { smgwId: smgwIdString},
-        order : { entryTimestamp: 'DESC' }
-    }).then(oldestEntry => console.log(oldestEntry));
+    synchronize: false,
+    logging: false
+    })
+    .then(async connection => {
+        let meterView = connection.getRepository(MeterDataSet);
+        oldestEntry = await getQuery(smgwId, meterView)
+        handleSMGWData(smgwId, currentMeasurementValue, oldestEntry);
+        await connection.close();
+        return;
+    })
+    .catch(error => {
+        console.log(error)
+    })
 
-}).catch(error => console.log(error))
 
-
+async function getQuery(smgwId: string, meterView: any) {
+    return new Promise(async (resolve) => {
+        resolve(meterView.findOne({
+            where : { smgwId: smgwId},
+            order : { entryTimestamp: 'DESC' }
+        }))
+    }) 
+}

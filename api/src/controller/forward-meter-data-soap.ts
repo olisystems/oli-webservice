@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { MessageHeader, Measurement, MeterData } from '../entity';
+import { MessageHeader, Measurement, MeterData,MeterDataSet } from '../entity';
 import { IMessageHeader, IMeasurement, IMeterData } from '../model';
 import { logger } from '../logger';
 import { errorResponses } from '../assets';
@@ -19,6 +19,7 @@ export async function postMeterData(dbConnection: any, data: any) {
     let messageHeaderRepository = dbConnection.getRepository(MessageHeader);
     let measurementRepository = dbConnection.getRepository(Measurement);
     let meterDataRepository = dbConnection.getRepository(MeterData);
+    let meterView = dbConnection.getRepository(MeterDataSet);
     let postMessageHeader: IMessageHeader;
     let postMeasurement: IMeasurement;
     let postMeterData: IMeterData;
@@ -125,20 +126,11 @@ export async function postMeterData(dbConnection: any, data: any) {
         }
 
         try{
-            // zuweisung von smgq id zu topic bzw.
-            // map mit https://olisharenergy.atlassian.net/wiki/spaces/OD/pages/1667170305/OLI+Fleet
-            // auf DB gehen, zählerstand rausholen und mit aktuellem verrechnen
-            // {"value": , "timestamp": }
-            // difference: value_t2*10**scaler_t2 - value_t1 * 10**scaler_t1
-            
-            //let lastMeterData = meterDataRepository.);
-            //let lastMeasurementData = measurementRepository.get();
-
-
-            //let measurementRepository = dbConnection.getRepository(Measurement);
-            //let meterDataRepository = dbConnection.getRepository(MeterData);
-            
-            
+            var oldestEntry: any = await meterView.findOne({
+                where : { smgwId: smgwId},
+                order : { entryTimestamp: 'DESC' }
+            });
+            handleSMGWData(smgwId, measurement, oldestEntry)
         } catch(error) {
             logger.error(error);
             resolve({

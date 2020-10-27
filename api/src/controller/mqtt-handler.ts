@@ -1,17 +1,18 @@
 import { mqttClient } from '../connect-cloud-mqtt';
 import { logger } from '../logger';
-import { Measurement, MeterData } from '../entity';
+import { Measurement } from '../entity';
 
 const topicMapping: Map<string,string> = new Map([
     ["23","WIRCON/OLI_23/PV/activeEnergy/Supply"],
     ["24","WIRCON/OLI_24/PV/activeEnergy/Supply"],
     ["26","WIRCON/OLI_26/PV/activeEnergy/Supply"],
     ["61","WIRCON/OLI_61/PV/activeEnergy/Supply"],
-    ["62","WIRCON/OLI_62/PV/activeEnergy/Supply"]
+    ["62","WIRCON/OLI_62/PV/activeEnergy/Supply"],
+    ["EDNT0018068443","Test"]
 ])
     
-export function handleSMGWData(meterData: MeterData, measurement: Measurement, lastMeasurement: Measurement){
-    var topic: string = getTopicName(meterData);
+export function handleSMGWData(smgwId: string, measurement: Measurement, lastMeasurement: Measurement){
+    var topic: string = getTopicName(smgwId);
     var valueToSend: number = calculateValue(measurement, lastMeasurement)
     var dataToSend: any = {
         timestamp: measurement.entryTimestamp,
@@ -21,10 +22,10 @@ export function handleSMGWData(meterData: MeterData, measurement: Measurement, l
 
 }
 
-function getTopicName(meterData: MeterData):string {
+function getTopicName(smgwId: string):string {
     var topic: string = ""
     try {
-        topic = topicMapping.get(meterData.smgwId || "") || "";
+        topic = topicMapping.get(smgwId) || "";
     }
     catch (error) {
         logger.error(error);
@@ -60,9 +61,8 @@ TODO
 error handling should be implemented properly
 
 
-var testData : MeterData ={
-    smgwId: "26"
-} 
+var testData : string = smgwId: "26";
+
 var currentMeasurementValue: Measurement = {
     entryTimestamp: "123",
     entryScaler: 1,
@@ -73,5 +73,5 @@ var lastMeasurementValue: Measurement = {
     entryValue: "456"
     
 }
-handleSMGWData(testData, currentMeasurementValue, lastMeasurementValue);
+handleSMGWData(smgwId, currentMeasurementValue, lastMeasurementValue);
 */
