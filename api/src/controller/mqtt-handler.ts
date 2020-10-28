@@ -7,16 +7,19 @@ const topicMapping: Map<string,string> = new Map([
     ["EDNT0020035232","WIRCON/OLI_24/PV/activeEnergy/Supply"],
     ["EDNT0018068443","WIRCON/OLI_26/PV/activeEnergy/Supply"],
     ["EDNT0020035231","WIRCON/OLI_61/PV/activeEnergy/Supply"],
-    ["EDNT0019035601","WIRCON/OLI_62/PV/activeEnergy/Supply"]
+    ["EDNT0019035601","WIRCON/OLI_62/PV/activeEnergy/Supply"],
 ])
+
+const rounding = parseFloat(process.env.ROUNDING || '0');
     
 export function handleSMGWData(smgwId: string, measurement: Measurement, lastMeasurement: Measurement){
     var topic: string = getTopicName(smgwId);
     var valueToSend: number = calculateValue(measurement, lastMeasurement)
     var dataToSend: any = {
-        timestamp: measurement.entryTimestamp,
-        value: valueToSend
+        timestamp: Date.parse(measurement.entryTimestamp ||''),
+        value: valueToSend.toFixed(rounding)
     } 
+    console.log(valueToSend.toFixed(0))
     publishData(topic, dataToSend);
 
 }
@@ -36,8 +39,8 @@ function getTopicName(smgwId: string):string {
 function calculateValue(measurement: Measurement, lastMeasurement: Measurement): number{
     var value: number = 1;
     try{
-        var currentMeasurementValue: number = parseFloat(measurement.entryValue || "1") * 10**(measurement.entryScaler || 1);
-        var lastMeasurementValue: number = parseFloat(lastMeasurement.entryValue || "1") * 10**(lastMeasurement.entryScaler || 1);
+        var currentMeasurementValue: number = (parseFloat(measurement.entryValue || "1") * 10**(measurement.entryScaler || 1));
+        var lastMeasurementValue: number = (parseFloat(lastMeasurement.entryValue || "1") * 10**(lastMeasurement.entryScaler || 1));
         value = currentMeasurementValue - lastMeasurementValue;
     } catch(error) {
         logger.error(error)

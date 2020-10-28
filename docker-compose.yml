@@ -53,6 +53,11 @@ services:
       - PG_USER=${PG_USER}
       - PG_PASSWORD=${PG_PASSWORD}
       - PG_DATABASE=${PG_DATABASE}
+      - MQTT_URL=${MQTT_URL}
+      - MQTT_PORT=${MQTT_PORT}
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - ROUNDING=${ROUNDING}
     volumes:
         - ./api/logs:/home/node/app/logs
     ports:

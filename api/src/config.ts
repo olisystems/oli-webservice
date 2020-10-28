@@ -9,7 +9,9 @@ export const config = {
             password: process.env.PG_PASSWORD || 'password',
             database: process.env.PG_DATABASE || "postgres",
             entities: [
-                __dirname + '/entity/*.ts',
+                //'/entity/*.ts',
+                //'/entity/*.js',
+                //__dirname + '/entity/*.ts',
                 __dirname + '/entity/*.js'
             ],
             synchronize: false,
@@ -22,7 +24,7 @@ export const config = {
     mqtt: {
         connection: {
             url: process.env.MQTT_URL || 'unbelievable-politician.cloudmqtt.com',
-            port: 1883,
+            port: process.env.MQTT_PORT || 1883,
             username: process.env.MQTT_USERNAME || 'gmnzhypg',
             password: process.env.MQTT_PASSWORD || 'zEb0WyhKguIn'
         }
