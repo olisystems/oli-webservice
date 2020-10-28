@@ -14,7 +14,7 @@ import { userRouter, meterDataRouter, meterDataRouterSoap } from './route';
 import { errorResponses } from './assets';
 
 const convert = require('xml-js');
-const port = process.env.SERVER_PORT;
+const port = process.env.SERVER_PORT || 9000;
 
 export const app: express.Application = express();
 export var dbConnection: any;
@@ -22,7 +22,7 @@ export var dbConnection: any;
 
 // Start app
 const startApp = async () => {
-
+    
     // Log mode
     if (process.env.NODE_ENV === 'production') {
         logger.info('service is running in production mode');

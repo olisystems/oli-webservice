@@ -5,7 +5,7 @@ import {Client, IClientOptions, connect, IConnackPacket} from 'mqtt';
 var connectionConfig = config.mqtt.connection
 var clientOptions:IClientOptions = {
     host: connectionConfig.url,
-    port: connectionConfig.port,
+    port: 1883,
     protocol: "mqtt",
     username: connectionConfig.username,
     password: connectionConfig.password

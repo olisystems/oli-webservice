@@ -8,7 +8,6 @@ import { errorResponses } from '../assets';
 
 export var userRouter = express.Router();
 
-
 userRouter.get('/', async function(req: Request, res: Response){
       
     let isAuthorized = await isAuthorizedAdmin(dbConnection, req.headers);

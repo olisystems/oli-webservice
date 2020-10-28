@@ -13,25 +13,25 @@ export class MessageHeader {
     @Column("text")
     correlationId?: string;
 
-    @Column("text")
+    @Column()
     timeSent?: string;
 
-    @Column("integer")
+    @Column()
     instanceId?: number;
 
-    @Column("text")
+    @Column()
     tenantId?: string;
 
-    @Column("text")
+    @Column()
     meterOperatorId?: string;
 
-    @Column("text")
+    @Column()
     externalMarketParticipantId?: string;
 
-    @Column("text")
+    @Column()
     routingKeyServiceBus?: string;
 
-    @Column("text")
+    @Column()
     routingKeyExtern?: string;
 
 }

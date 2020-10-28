@@ -19,7 +19,6 @@ export function handleSMGWData(smgwId: string, measurement: Measurement, lastMea
         timestamp: Date.parse(measurement.entryTimestamp ||''),
         value: valueToSend.toFixed(rounding)
     } 
-    console.log(valueToSend.toFixed(0))
     publishData(topic, dataToSend);
 
 }

@@ -21,7 +21,7 @@ export async function connectDb() {
                 break;
             } catch (error) {
                 retries -= 1;
-                logger.error(error);
+                console.log(error)
                 logger.error(`retries left: ${retries}`);
                 await new Promise(res => setTimeout(res, config.db.retryTimeout));
             }

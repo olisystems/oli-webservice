@@ -4,22 +4,22 @@ import {Entity, Column, PrimaryColumn} from 'typeorm';
 @Entity({name: 'public.v_meter_data'})
 export class MeterData {
 
-    @PrimaryColumn("text")
+    @PrimaryColumn()
     pk?: string;
 
-    @Column("text")
+    @Column()
     messageHeaderFK?: string;
 
-    @Column("text")
+    @Column()
     smgwId?: string;
 
-    @Column("text")
+    @Column()
     logicalDeviceId?: string;
 
-    @Column("integer")
+    @Column()
     measurementFK?: number;
 
-    @Column("text")
+    @Column()
     rawData?: string;
 
 }

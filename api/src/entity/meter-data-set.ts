@@ -4,64 +4,64 @@ import {Entity, Column, PrimaryColumn} from 'typeorm';
 @Entity({name: 'public.v_meter_data_set'})
 export class MeterDataSet {
 
-    @PrimaryColumn("text")
+    @PrimaryColumn()
     pk?: string;
 
-    @Column("text")
+    @Column()
     smgwId?: string;
 
-    @Column("text")
+    @Column()
     logicalDeviceId?: string;
 
-    @Column("text")
+    @Column()
     rawData?: string;
 
-    @Column("text")
+    @Column()
     messageId?: string;
 
-    @Column("text")
+    @Column()
     correlationId?: string;
 
-    @Column("text")
+    @Column()
     timeSent?: string;
 
-    @Column("integer")
+    @Column()
     instanceId?: number;
 
-    @Column("text")
+    @Column()
     tenantId?: string;
 
-    @Column("text")
+    @Column()
     meterOperatorId?: string;
 
-    @Column("text")
+    @Column()
     externalMarketParticipantId?: string;
 
-    @Column("text")
+    @Column()
     routingKeyServiceBus?: string;
 
-    @Column("text")
+    @Column()
     routingKeyExtern?: string;
 
-    @Column("text")
+    @Column()
     obis?: string;
 
-    @Column("text")
+    @Column()
     capturePeriod?: string;
 
-    @Column("text")
+    @Column()
     entryTimestamp?: string;
 
-    @Column("text")
+    @Column()
     entryValue?: string;
 
-    @Column("text")
+    @Column()
     entryScaler?: number;
 
-    @Column("text")
+    @Column()
     entryUnit?: string;
 
-    @Column("text")
+    @Column()
     entryStatus?: string;
 
 }
