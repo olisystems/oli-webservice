@@ -3,12 +3,11 @@ import { logger } from '../logger';
 import { Measurement } from '../entity';
 
 const topicMapping: Map<string,string> = new Map([
-    ["23","WIRCON/OLI_23/PV/activeEnergy/Supply"],
-    ["24","WIRCON/OLI_24/PV/activeEnergy/Supply"],
-    ["26","WIRCON/OLI_26/PV/activeEnergy/Supply"],
-    ["61","WIRCON/OLI_61/PV/activeEnergy/Supply"],
-    ["62","WIRCON/OLI_62/PV/activeEnergy/Supply"],
-    ["EDNT0018068443","Test"]
+    ["EDNT0018068446","WIRCON/OLI_23/PV/activeEnergy/Supply"],
+    ["EDNT0020035232","WIRCON/OLI_24/PV/activeEnergy/Supply"],
+    ["EDNT0018068443","WIRCON/OLI_26/PV/activeEnergy/Supply"],
+    ["EDNT0020035231","WIRCON/OLI_61/PV/activeEnergy/Supply"],
+    ["EDNT0019035601","WIRCON/OLI_62/PV/activeEnergy/Supply"]
 ])
     
 export function handleSMGWData(smgwId: string, measurement: Measurement, lastMeasurement: Measurement){
