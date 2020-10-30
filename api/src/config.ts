@@ -22,8 +22,8 @@ export const config = {
     mqtt: {
         connection: {
             url: process.env.MQTT_URL || 'unbelievable-politician.cloudmqtt.com',
-            username: process.env.MQTT_USERNAME || 'gmnzhypg',
-            password: process.env.MQTT_PASSWORD || 'zEb0WyhKguIn'
+            username: process.env.MQTT_USERNAME,
+            password: process.env.MQTT_PASSWORD
         }
     }
 }

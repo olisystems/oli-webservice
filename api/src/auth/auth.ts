@@ -36,7 +36,6 @@ export async function isAuthorizedUser(dbConnection: any, reqHeader: any) {
                 where: { name: nameReq } 
             });
             let passwordIsEqual = await bcrypt.compare(passwordReq, getUser[0].password);
-
             if (passwordIsEqual) {
                 resolve(true);
             } else {
