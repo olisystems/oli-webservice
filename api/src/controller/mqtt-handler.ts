@@ -29,6 +29,7 @@ function getTopicName(smgwId: string):string {
         topic = topicMapping.get(smgwId) || "";
     }
     catch (error) {
+        logger.error("Did not find a corresponding topic to the given smgwId: " + smgwId)
         logger.error(error);
     }
     return topic;
@@ -42,26 +43,31 @@ function calculateValue(measurement: Measurement, lastMeasurement: Measurement):
         var lastMeasurementValue: number = (parseFloat(lastMeasurement.entryValue || "1") * 10**(lastMeasurement.entryScaler || 1));
         value = currentMeasurementValue - lastMeasurementValue;
     } catch(error) {
+        logger.error("Could not calculate the different values between two timestamps.")
         logger.error(error)
     }
     return value;
 }
 
 function publishData(topic: string, dataToSend: any) {
+    let data = JSON.stringify({
+        "timestamp" : dataToSend.timestamp,
+        "value" : dataToSend.value
+    })
     try {
-        mqttClient.publish(topic, JSON.stringify({
-            "timestamp" : dataToSend.timestamp,
-            "value" : dataToSend.value
-        })
-        );
+        mqttClient.publish(topic, data)
+        logger.info("published data: " + data);
     }
     catch (error) {
+        logger.error("Could not publiish data to mqtt broker.")
         logger.error(error);
     }
 }
 
 /*
 Unittest for publishData
+You have to inject the client credentials in the config file first, to make the publishing possible
+
 let testTopic: string = "test";
 let testData:any = {
     timestamp: Date.now(),
@@ -72,9 +78,7 @@ publishData(testTopic, testData)
 
 /*
 unittest don't know where to put it
-TODO
-error handling should be implemented properly
-
+You have to inject the client credentials in the config file first, to make the publishing possible
 
 var testData : string = smgwId: "26";
 
