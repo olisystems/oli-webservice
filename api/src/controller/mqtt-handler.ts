@@ -68,7 +68,7 @@ function publishData(topic: string, dataToSend: any) {
 
 /*
 Unittest for calculating the value
-*/
+
 var currentMeasurementValue: Measurement = {
     entryTimestamp: "123",
     entryScaler: 0,
@@ -81,7 +81,7 @@ var lastMeasurementValue: Measurement = {
 }
 let value = calculateValue(currentMeasurementValue, lastMeasurementValue)
 console.log(value)
-
+*/
 
 /*
 Unittest for publishData
