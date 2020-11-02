@@ -49,12 +49,26 @@ function calculateValue(measurement: Measurement, lastMeasurement: Measurement):
 
 function publishData(topic: string, dataToSend: any) {
     try {
-        mqttClient.publish(topic, JSON.stringify(dataToSend));
+        mqttClient.publish(topic, JSON.stringify({
+            "timestamp" : dataToSend.timestamp,
+            "value" : dataToSend.value
+        })
+        );
     }
     catch (error) {
         logger.error(error);
     }
 }
+
+/*
+Unittest for publishData
+let testTopic: string = "test";
+let testData:any = {
+    timestamp: Date.now(),
+    value : 123
+} 
+publishData(testTopic, testData)
+*/
 
 /*
 unittest don't know where to put it
