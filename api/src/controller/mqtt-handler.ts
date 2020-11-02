@@ -17,7 +17,7 @@ export function handleSMGWData(smgwId: string, measurement: Measurement, lastMea
     var valueToSend: number = calculateValue(measurement, lastMeasurement)
     var dataToSend: any = {
         timestamp: Date.parse(measurement.entryTimestamp ||''),
-        value: valueToSend.toFixed(rounding)
+        value: valueToSend
     } 
     publishData(topic, dataToSend);
 
@@ -39,14 +39,15 @@ function getTopicName(smgwId: string):string {
 function calculateValue(measurement: Measurement, lastMeasurement: Measurement): number{
     var value: number = 1;
     try{
-        var currentMeasurementValue: number = (parseFloat(measurement.entryValue || "1") * 10**(measurement.entryScaler || 1));
-        var lastMeasurementValue: number = (parseFloat(lastMeasurement.entryValue || "1") * 10**(lastMeasurement.entryScaler || 1));
+        var currentMeasurementValue: number = (parseFloat(measurement.entryValue || "1") * 10**(measurement.entryScaler || 0));
+        var lastMeasurementValue: number = (parseFloat(lastMeasurement.entryValue || "1") * 10**(lastMeasurement.entryScaler || 0));
         value = currentMeasurementValue - lastMeasurementValue;
     } catch(error) {
         logger.error("Could not calculate the different values between two timestamps.")
         logger.error(error)
     }
-    return value;
+    
+    return parseInt(value.toFixed(rounding));
 }
 
 function publishData(topic: string, dataToSend: any) {
@@ -63,6 +64,24 @@ function publishData(topic: string, dataToSend: any) {
         logger.error(error);
     }
 }
+
+
+/*
+Unittest for calculating the value
+*/
+var currentMeasurementValue: Measurement = {
+    entryTimestamp: "123",
+    entryScaler: 0,
+    entryValue: "1"
+}
+var lastMeasurementValue: Measurement = {
+    entryScaler: -1,
+    entryValue: "6"
+    
+}
+let value = calculateValue(currentMeasurementValue, lastMeasurementValue)
+console.log(value)
+
 
 /*
 Unittest for publishData
