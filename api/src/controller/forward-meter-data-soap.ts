@@ -34,6 +34,7 @@ export async function postMeterData(dbConnection: any, data: any) {
     let forwardMeterData: any;
 
     let badRequest: any;
+    let timeSent: string;
 
     return new Promise(async (resolve) => {
 
@@ -130,7 +131,7 @@ export async function postMeterData(dbConnection: any, data: any) {
                 where : { smgwId: smgwId},
                 order : { entryTimestamp: 'DESC' }
             });
-            let timeSent: string = getObjectByName(data, 'TimeSent')[0].elements[0].text;
+            let timeSent: string = messageHeader.timeSent || "";
             handleSMGWData(smgwId, measurement, oldestEntry, timeSent)
         } catch(error) {
             logger.error(error);
