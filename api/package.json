@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --project .",
     "dev": "ts-node-dev --respawn --transpileOnly ./src/app.ts",
     "start:prod": "pm2 start ./dist/app.js",
     "stop:prod": "pm2 stop ./dist/app.js"

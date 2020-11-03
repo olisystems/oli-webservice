@@ -30,7 +30,7 @@ createConnection({
     .then(async connection => {
         let meterView = connection.getRepository(MeterDataSet);
         oldestEntry = await getQuery(smgwId, meterView)
-        handleSMGWData(smgwId, currentMeasurementValue, oldestEntry);
+        handleSMGWData(smgwId, currentMeasurementValue, oldestEntry, "");
         await connection.close();
         return;
     })
