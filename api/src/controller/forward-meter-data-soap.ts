@@ -132,9 +132,7 @@ export async function postMeterData(dbConnection: any, data: any) {
                 order : { entryTimestamp: 'DESC' }
             });
             let timeSent: string = messageHeader.timeSent || "";
-            logger.info(timeSent)
-            console.log(timeSent);
-            handleSMGWData(smgwId, measurement, oldestEntry, timeSent)
+            handleSMGWData(smgwId, measurement, oldestEntry, messageHeader.timeSent || "")
         } catch(error) {
             logger.error("Something went wrong during publishing the data to the mqtt broker")
             logger.error(error);
