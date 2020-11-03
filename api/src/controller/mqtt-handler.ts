@@ -12,15 +12,16 @@ const topicMapping: Map<string,string> = new Map([
 
 const rounding = parseFloat(process.env.ROUNDING || '0');
     
-export function handleSMGWData(smgwId: string, measurement: Measurement, lastMeasurement: Measurement){
+export function handleSMGWData(smgwId: string, measurement: Measurement, lastMeasurement: Measurement, timeSent: string){
     var topic: string = getTopicName(smgwId);
     var valueToSend: number = calculateValue(measurement, lastMeasurement)
     var dataToSend: any = {
-        timestamp: Date.parse(measurement.entryTimestamp ||''),
+        timestamp: Date.parse(timeSent),
         value: valueToSend
     } 
-    publishData(topic, dataToSend);
-
+    if(dataToSend.value != 0){
+        publishData(topic, dataToSend);
+    }
 }
 
 function getTopicName(smgwId: string):string {
@@ -68,7 +69,6 @@ function publishData(topic: string, dataToSend: any) {
 
 /*
 Unittest for calculating the value
-
 var currentMeasurementValue: Measurement = {
     entryTimestamp: "123",
     entryScaler: 0,
@@ -76,8 +76,7 @@ var currentMeasurementValue: Measurement = {
 }
 var lastMeasurementValue: Measurement = {
     entryScaler: -1,
-    entryValue: "6"
-    
+    entryValue: "6"  
 }
 let value = calculateValue(currentMeasurementValue, lastMeasurementValue)
 console.log(value)
