@@ -132,6 +132,7 @@ export async function postMeterData(dbConnection: any, data: any) {
                 order : { entryTimestamp: 'DESC' }
             });
             let timeSent: string = messageHeader.timeSent || "";
+            logger.info(timeSent)
             console.log(timeSent);
             handleSMGWData(smgwId, measurement, oldestEntry, timeSent)
         } catch(error) {
