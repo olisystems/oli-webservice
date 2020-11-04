@@ -19,9 +19,7 @@ export function handleSMGWData(smgwId: string, measurement: Measurement, lastMea
         timestamp: Date.parse(timeSent),
         value: valueToSend
     } 
-    if(dataToSend.value != 0){
-        publishData(topic, dataToSend);
-    }
+    publishData(topic, dataToSend);
 }
 
 function getTopicName(smgwId: string):string {

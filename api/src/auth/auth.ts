@@ -43,7 +43,7 @@ export async function isAuthorizedUser(dbConnection: any, reqHeader: any) {
             }
 
         } catch (error) {
-            
+            logger.error("user not authorized")
             logger.error(error);
             resolve(false)
         }

@@ -47,6 +47,8 @@ export async function postMeterData(dbConnection: any, data: any) {
             // Validate request body
             badRequest = validateRequestBody(jsonData);
             if (badRequest !== undefined) {
+                logger.error("bad request")
+                logger.error(badRequest);
                 resolve({
                     status: 400,
                     error: { message: 'Bad request', error: badRequest }
@@ -73,7 +75,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             }
 
         } catch (error) {
-            
+            logger.error("Data is corrupted")
             logger.error(error);
             resolve({
                 status: 400,
@@ -86,7 +88,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             
             postMessageHeader = await messageHeaderRepository.save(messageHeader);
         } catch (error) {
-            
+            logger.error("Something went wrong during saving the message header")
             logger.error(error);
             resolve({
                 status: 500,
@@ -99,7 +101,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             postMeasurement = await measurementRepository.save(measurement);
 
         } catch (error) {
-            
+            logger.error("Something went wrong during saving the measurement data")
             logger.error(error);
             resolve({
                 status: 500,
@@ -118,7 +120,7 @@ export async function postMeterData(dbConnection: any, data: any) {
             meterData.rawData = rawData;
             postMeterData = await meterDataRepository.save(meterData);
         } catch (error) {
-            
+            logger.error("Something went wrong during saving the meter data")
             logger.error(error);
             resolve({
                 status: 500,
@@ -132,7 +134,7 @@ export async function postMeterData(dbConnection: any, data: any) {
                 order : { entryTimestamp: 'DESC' }
             });
             let timeSent: string = messageHeader.timeSent || "";
-            handleSMGWData(smgwId, measurement, oldestEntry, messageHeader.timeSent || "")
+            handleSMGWData(smgwId, measurement, oldestEntry, timeSent);
         } catch(error) {
             logger.error("Something went wrong during publishing the data to the mqtt broker")
             logger.error(error);
