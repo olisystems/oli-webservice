@@ -34,7 +34,7 @@ export async function postMeterData(dbConnection: any, data: any) {
     let forwardMeterData: any;
 
     let badRequest: any;
-    let timeSent: string;
+    var oldestEntry: any
 
     return new Promise(async (resolve) => {
 
@@ -85,7 +85,6 @@ export async function postMeterData(dbConnection: any, data: any) {
 
         // Save message header
         try {
-            
             postMessageHeader = await messageHeaderRepository.save(messageHeader);
         } catch (error) {
             logger.error("Something went wrong during saving the message header")
@@ -94,6 +93,17 @@ export async function postMeterData(dbConnection: any, data: any) {
                 status: 500,
                 error: errorResponses.internal
             })
+        }
+
+        // Get oldest Entry before saving a new measurement (required for publishing data to the mqtt broker)
+        try{
+            oldestEntry = await meterView.findOne({
+                where : { smgwId: smgwId},
+                order : { entryTimestamp: 'DESC' }
+            });
+        } catch(error){
+            logger.error("Could not find the oldestEntry for the smgwId: " + smgwId)
+            logger.error(error)
         }
 
         // Save measurement
@@ -111,7 +121,6 @@ export async function postMeterData(dbConnection: any, data: any) {
 
         // Save meter data
         try {
-            
             meterData.pk = uuid();
             meterData.messageHeaderFK = messageHeader.pk;
             meterData.smgwId = smgwId;
@@ -129,10 +138,6 @@ export async function postMeterData(dbConnection: any, data: any) {
         }
 
         try{
-            var oldestEntry: any = await meterView.findOne({
-                where : { smgwId: smgwId},
-                order : { entryTimestamp: 'DESC' }
-            });
             let timeSent: string = messageHeader.timeSent || "";
             handleSMGWData(smgwId, measurement, oldestEntry, timeSent);
         } catch(error) {
